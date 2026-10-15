@@ -51,7 +51,7 @@ function rawFetchUrl(url, { method = "GET", maxBytes = 262144, headers = {}, tim
             method,
             timeout,
             rejectUnauthorized: false,   // we report certificate problems, not refuse on them
-            headers: { "User-Agent": "dShield-Scanner/1.0 (+https://dshield.dolluzcorp.com)", ...headers },
+            headers: { "User-Agent": "dShield-Scanner/1.0 (+https://duncanloop.in)", ...headers },
         }, (res) => {
             let body = "";
             let bytes = 0;

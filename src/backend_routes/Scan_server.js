@@ -29,7 +29,7 @@ const { isSuppressed } = require("../utils/suppression");
 const { queueMail } = require("../utils/mail");
 
 const router = express.Router();
-const db = getDBConnection(process.env.DB_NAME || "dshield");
+const db = getDBConnection(process.env.DB_NAME || "duncanloop_dshield");
 
 // ── rate limiting ────────────────────────────────────────────────────────
 //

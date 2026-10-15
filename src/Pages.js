@@ -3,13 +3,12 @@ import { Link, useLocation, useSearchParams } from "react-router-dom";
 import { apiPost } from "./utils/api";
 import "./Pages.css";
 import { useDocumentMeta } from "./utils/meta";
-/* The lockup, not the bare eagle. DOLLUZ_CORP.png is the artwork as
-   supplied — gold bird, wordmark set in BLACK — which is invisible against
-   #0B0316. DOLLUZ_CORP_dark.png is that same file with its near-black pixels
-   recoloured to bone and every gold pixel left exactly as supplied, which is
-   what the frozen prototype does to produce its own lockup. It is generated
-   by scripts/make-dark-lockup.mjs; re-run that if the artwork is resupplied. */
-import lockup from "./assets/img/DOLLUZ_CORP_dark.png";
+/* The lockup, not the bare tiles. The master artwork sets "duncanloop" and
+   "Work Wise" in dark navy, which is close to invisible against #0B0316.
+   duncanloop_full_light.png is the supplied dark-background version: the
+   same lockup with the wordmark in #F4F0FF, tiles and arrows unchanged.
+   duncanloop_full_trimmed.png is the navy original, for light grounds. */
+import lockup from "./assets/img/duncanloop_full_light.png";
 import { OFFICE, TIERS, SERVICES, COMPLIANCE, SMART_BUILT, WHATSAPP_HREF } from "./data/site-content";
 
 /* ── Contact ─────────────────────────────────────────────────────────── */
@@ -163,7 +162,7 @@ function ContactForm() {
    from every route that is not "/". */
 export function Contact() {
     useDocumentMeta({
-        title: "Contact Dolluz Corp — Security Services | dShield",
+        title: "Contact Duncanloop — Security Services | dShield",
         description: "Talk to our engineers about audits, penetration testing, incident response or compliance.",
         canonical: "/contact",
     });
@@ -456,12 +455,11 @@ export function Footer() {
                     <div className="footer__brand">
                         <p className="footer__mark">dShield</p>
 
-                        {/* The full lockup: bird, wordmark and tagline in one
-                            asset. It replaces the eagle-plus-typed-company-name
-                            pairing that was here, which set "Dolluz Corp" in
-                            Orbitron beside artwork that already says "DOLLUZ
-                            CORP" in the real brand face — the same words twice,
-                            in two different typefaces, six pixels apart.
+                        {/* The full lockup: tiles, wordmark and tagline in one
+                            asset, rather than tiles beside a typed company
+                            name — the artwork already says "duncanloop" in
+                            the real brand face, and setting it again in
+                            Orbitron would print the same word twice.
 
                             alt carries the wordmark AND the tagline because
                             that is what the image says; a screen reader gets
@@ -469,9 +467,9 @@ export function Footer() {
                         <img
                             className="footer__lockup"
                             src={lockup}
-                            alt="Dolluz Corp — One Place. One Start. One Team."
-                            width="3950"
-                            height="994"
+                            alt="duncanloop — Work Wise"
+                            width="3125"
+                            height="991"
                         />
 
                         <p className="footer__line">

@@ -189,10 +189,10 @@ function normaliseDomain(input) {
     let raw = String(input || "").trim().toLowerCase();
     raw = raw.replace(/^https?:\/\//, "").replace(/\/.*$/, "").replace(/:\d+$/, "").replace(/^www\./, "");
 
-    if (!raw) return { ok: false, message: "Enter a domain, for example dolluzcorp.com" };
+    if (!raw) return { ok: false, message: "Enter a domain, for example duncanloop.in" };
     if (raw.length > 253) return { ok: false, message: "That domain is too long." };
     if (!/^[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)+$/.test(raw)) {
-        return { ok: false, message: "That does not look like a domain. Try something like dolluzcorp.com" };
+        return { ok: false, message: "That does not look like a domain. Try something like duncanloop.in" };
     }
     if (/^\d+\.\d+\.\d+\.\d+$/.test(raw)) {
         return { ok: false, message: "Enter a domain name rather than an IP address." };

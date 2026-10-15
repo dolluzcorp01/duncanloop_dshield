@@ -2,7 +2,7 @@
   "meta": {
     "version": "1.1",
     "name": "dShield Remediation Library",
-    "owner": "Dolluz Corp",
+    "owner": "Duncanloop",
     "checkCount": 65,
     "implementedCount": 58,
     "note": "Ported from dShield v6.3 with four defects fixed: check ids realigned to the scanner, SURF-ADMIN-02 severity corrected, the abandoned tier vocabulary removed, and free-text effort replaced with effortHours plus an optional effortNote. Severity, weight and domain are deliberately absent — they are read from the check at render time so the two sources cannot disagree. `detect` and `evidenceTemplate` are not shipped: they describe how each check works."

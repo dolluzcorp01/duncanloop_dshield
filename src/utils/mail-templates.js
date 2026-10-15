@@ -18,7 +18,7 @@
 // ─────────────────────────────────────────────────────────────────────────
 
 const SITE_URL =
-    (process.env.REACT_APP_SITE_URL || "https://dshield.dolluzcorp.com").replace(/\/+$/, "");
+    (process.env.REACT_APP_SITE_URL || "https://duncanloop.in").replace(/\/+$/, "");
 
 /** Escape anything that reaches HTML. The enquiry alert carries a message a
  *  stranger typed, and an unescaped angle bracket there breaks the layout at
@@ -43,7 +43,7 @@ function shell(innerHtml, footerHtml) {
   <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:560px;background:#ffffff;border:1px solid ${LINE};border-radius:10px;overflow:hidden;font-family:Helvetica,Arial,sans-serif;">
     <tr><td style="background:${INK};padding:18px 26px;">
       <span style="color:${GOLD};font-size:19px;font-weight:bold;letter-spacing:.2px;">dShield</span>
-      <span style="color:#8a8d94;font-size:11px;letter-spacing:1px;"> &nbsp;BY DOLLUZ CORP</span>
+      <span style="color:#8a8d94;font-size:11px;letter-spacing:1px;"> &nbsp;BY DUNCANLOOP</span>
     </td></tr>
     <tr><td style="padding:28px 26px;color:${TEXT};font-size:15px;line-height:1.62;">
 ${innerHtml}
@@ -65,7 +65,7 @@ ${footerHtml}
  * unsubscribe from.
  */
 function footer(category, payload = {}) {
-    const who = `Dolluz Corp, Chennai, India &middot; <a href="${SITE_URL}" style="color:${MUTED};">dshield.dolluzcorp.com</a>`;
+    const who = `Duncanloop, Chennai, India &middot; <a href="${SITE_URL}" style="color:${MUTED};">duncanloop.in</a>`;
 
     if (category === "marketing") {
         const token = payload.unsubscribeToken;
@@ -76,18 +76,18 @@ function footer(category, payload = {}) {
     if (category === "internal") {
         return `Internal notification from the dShield site.<br /><br />${who}`;
     }
-    return `You are receiving this because you asked for it on dshield.dolluzcorp.com. It is not marketing, and we have not added you to any list.<br /><br />${who}`;
+    return `You are receiving this because you asked for it on duncanloop.in. It is not marketing, and we have not added you to any list.<br /><br />${who}`;
 }
 
 function footerText(category, payload = {}) {
-    const who = "Dolluz Corp, Chennai, India · dshield.dolluzcorp.com";
+    const who = "Duncanloop, Chennai, India · duncanloop.in";
     if (category === "marketing") {
         const token = payload.unsubscribeToken;
         const link = token ? `${SITE_URL}/preferences/${token}` : `${SITE_URL}/contact`;
         return `You are receiving this because you asked us to tell you when paid reports open.\nUnsubscribe from all email: ${link}\n\n${who}`;
     }
     if (category === "internal") return `Internal notification from the dShield site.\n\n${who}`;
-    return `You are receiving this because you asked for it on dshield.dolluzcorp.com. It is not marketing, and we have not added you to any list.\n\n${who}`;
+    return `You are receiving this because you asked for it on duncanloop.in. It is not marketing, and we have not added you to any list.\n\n${who}`;
 }
 
 const btn = (href, label) =>
@@ -185,14 +185,14 @@ ${footerText("transactional", p)}`;
 /* ── 3 · enquiry_ack — TRANSACTIONAL ─────────────────────────────────── */
 
 const enquiry_ack = {
-    subject: () => "We have your message — Dolluz Corp",
+    subject: () => "We have your message — Duncanloop",
     html: (p = {}) => shell(`
 <p style="margin:0 0 16px;">Thank you for writing to us. Your message has reached us and a person will reply to it.</p>
 ${p.topicLabel ? `<p style="margin:0 0 16px;">You asked about <strong>${esc(p.topicLabel)}</strong>.</p>` : ""}
 <p style="margin:0 0 16px;">We have not set an automatic reply time, because we would rather answer properly than quickly.</p>
 <p style="margin:0;color:${MUTED};font-size:14px;">While you wait, the free scan and the five free tools are available without an account.</p>`,
         footer("transactional", p)),
-    text: (p = {}) => `We have your message — Dolluz Corp
+    text: (p = {}) => `We have your message — Duncanloop
 
 Thank you for writing to us. Your message has reached us and a person will
 reply to it.

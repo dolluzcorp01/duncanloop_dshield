@@ -31,7 +31,7 @@
 
 /* The wording on the marketing opt-in.
 
-   Group-scoped by design: it names Dolluz Corp and its products, not dShield
+   Group-scoped by design: it names Duncanloop and its products, not dShield
    alone. That is what lets a dShield unsubscribe be honoured without
    destroying a permission the person gave to the company — and why the
    preference centre can offer "stop dShield" and "stop everything" as two
@@ -39,7 +39,7 @@
    other. The exact string is submitted with the tick, so a later change to
    this copy cannot rewrite what a past contact agreed to. */
 export const OPT_IN_TEXT =
-    "I agree to receive updates, offers and security briefings from Dolluz Corp and its products. "
+    "I agree to receive updates, offers and security briefings from Duncanloop and its products. "
     + "I can change this or unsubscribe at any time.";
 
 /* The four categories on the preference centre. Kept few on purpose: a person
@@ -231,7 +231,7 @@ export const FAQ = [
     },
     {
         q: "Who is behind this?",
-        a: "Dolluz Corp, an IT services and consulting firm in Chennai. Real people, a real office, and a phone number that a person answers.",
+        a: "Duncanloop, an IT services and consulting firm in Chennai. Real people, a real office, and a phone number that a person answers.",
     },
 ];
 
@@ -243,13 +243,13 @@ export const FAQ = [
    fake number under that sentence is worse than no number at all, so the
    field is absent until somebody supplies a real one. */
 export const OFFICE = {
-    company: "Dolluz Corp",
+    company: "Duncanloop",
     line1: "Chennai, Tamil Nadu",
     country: "India",
     /* THE ADDRESS WE PRINT IS NOT THE ADDRESS WE SEND FROM, and that is
        deliberate.
 
-       Outbound mail leaves as connect@dolluzcorp.com (SENDGRID_FROM), which
+       Outbound mail leaves as connect@duncanloop.in (SENDGRID_FROM), which
        is the mailbox the sending infrastructure is authenticated against —
        its SPF and DKIM records are what make our mail arrive rather than
        land in a spam folder. Publishing that address on a public page puts
@@ -257,12 +257,12 @@ export const OFFICE = {
        address sitting in spam lists is a deliverability problem that takes
        months to undo.
 
-       So every address rendered in the interface is admin@dolluzcorp.com:
+       So every address rendered in the interface is admin@duncanloop.in:
        the monitored inbox a person writes to when they want help, and the
        same address enquiry alerts already land in (ENQUIRY_ALERT_TO).
        Change this one line and every "contact us" on the site changes with
        it. */
-    email: "admin@dolluzcorp.com",
+    email: "admin@duncanloop.in",
     hours: "Mon to Fri, 9:30am to 6:30pm IST",
 
     /* WhatsApp, digits only in international format. Empty would mean the
@@ -271,16 +271,16 @@ export const OFFICE = {
        this is the real number.
 
        Written with the country code and no punctuation because that is what
-       wa.me takes. Floating.js strips non-digits anyway, so "+91 77790
-       79666" would also work — this form is just what reaches the URL. */
-    whatsapp: "917779079666",
+       wa.me takes. Floating.js strips non-digits anyway, so "+91 93302
+       59330" would also work — this form is just what reaches the URL. */
+    whatsapp: "919330259330",
 
     /* The same number, punctuated for a person to read off the page. The
        digits-only form above is what wa.me takes; this is what the footer
        and the contact card print. Kept immediately beside it so the two
        cannot drift — a printed number that does not match the one the
        button dials is a support call nobody can explain. */
-    whatsappDisplay: "+91 77790 79666",
+    whatsappDisplay: "+91 93302 59330",
 
     /* Pre-filled into the chat so the person does not have to open with
        "hi". A message already in the box is the difference between a button

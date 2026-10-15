@@ -20,7 +20,7 @@ const express = require("express");
 const getDBConnection = require("../../config/db");
 const { emailHash } = require("../utils/suppression");
 
-const db = getDBConnection(process.env.DB_NAME || "dshield");
+const db = getDBConnection(process.env.DB_NAME || "duncanloop_dshield");
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const clean = (v, max) => (v === undefined || v === null) ? null : String(v).trim().slice(0, max) || null;
@@ -31,7 +31,7 @@ const clean = (v, max) => (v === undefined || v === null) ? null : String(v).tri
 const DOC_KEYS = ["terms", "privacy", "refunds", "cookies"];
 
 /**
- * Mask an address for display: sh•••@dolluzcorp.com
+ * Mask an address for display: sh•••@duncanloop.in
  *
  * The person recognises their own address; nobody learns a new one. Without
  * this, anyone who guesses a token is handed a working email address.

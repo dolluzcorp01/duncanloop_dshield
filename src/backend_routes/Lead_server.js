@@ -35,7 +35,7 @@ const TOPIC_LABELS = {
 const labelForTopic = (slug) => (slug ? (TOPIC_LABELS[slug] || slug) : null);
 
 const router = express.Router();
-const db = getDBConnection(process.env.DB_NAME || "dshield");
+const db = getDBConnection(process.env.DB_NAME || "duncanloop_dshield");
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const clean = (v, max) => (v === undefined || v === null) ? null : String(v).trim().slice(0, max) || null;
@@ -95,7 +95,7 @@ router.post("/enquiry", (req, res) => {
 
         queueMail(db, {
             to: row.email, template: "enquiry_ack", category: "transactional",
-            subject: "We have your message — Dolluz Corp", payload,
+            subject: "We have your message — Duncanloop", payload,
         }, (qErr) => { if (qErr) console.error("⚠️  Could not queue enquiry acknowledgement:", qErr.message); });
 
         const alertTo = String(process.env.ENQUIRY_ALERT_TO || "").trim();

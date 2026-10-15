@@ -216,10 +216,10 @@
     color: var(--bone);
 }
 
-/* The lockup is a wide asset — roughly 4:1 — so it is sized by width and
-   left to find its own height. width/height on the <img> tag match the
-   file's real pixel dimensions so the browser reserves the right box before
-   the image loads; without them the whole footer reflows on arrival.
+/* The lockup is a wide asset — 3125 × 991, about 3.15:1 — so it is sized by
+   width and left to find its own height. width/height on the <img> tag match
+   the file's real pixel dimensions so the browser reserves the right box
+   before the image loads; without them the whole footer reflows on arrival.
 
    max-width keeps it inside the brand column at every breakpoint, including
    the 2-up layout below 760px where that column is roughly half the screen. */

@@ -1,6 +1,11 @@
 # dShield — Global Site
 
-**Dolluz Corp · Chennai**
+**Duncanloop · Chennai** · repository `duncanloop_dshield` · https://duncanloop.in
+
+dShield, operated by **Duncanloop**. Duncanloop is a separate legal entity
+from Dolluz Corp — it is not a Dolluz brand, subsidiary or reseller. This
+repository began as a copy of Dolluz Corp's dShield site and was rebranded;
+nothing here may say or imply that the two companies are related.
 
 The public front door. Anyone can enter a domain and get a free security grade,
 use five free tools, and see what the paid tiers cover.
@@ -33,7 +38,7 @@ collects interest instead. Everything above is live and useful without it.
 accounts. The free scan and all five tools use only DNS, TLS and HTTP.
 
 ```bash
-# 1 — database
+# 1 — database (creates and uses `duncanloop_dshield`; table names unchanged)
 mysql -u root -p < db/schema.sql
 mysql -u root -p < db/schema-legal.sql   # must run after schema.sql
 mysql -u root -p < db/schema-mail.sql    # must run after schema-legal.sql
@@ -51,7 +56,7 @@ npm run dev
 ```
 
 - React dev server → **http://localhost:3000**
-- API → **http://localhost:4008**
+- API → **http://localhost:4014**
 
 `npm run dev` starts both. To run them separately use `npm run server` and
 `npm start` in two terminals.
@@ -59,8 +64,8 @@ npm run dev
 ### Checking it works
 
 ```bash
-curl http://localhost:4008/api/health
-curl -X POST http://localhost:4008/api/scan \
+curl http://localhost:4014/api/health
+curl -X POST http://localhost:4014/api/scan \
      -H "Content-Type: application/json" \
      -d '{"domain":"github.com"}'
 ```
@@ -72,9 +77,9 @@ A scan takes 20–60 seconds depending on how quickly the other end answers.
 ## Layout
 
 ```
-dshield-global/
+duncanloop_dshield/
 ├── .env                     DB credentials and API base
-├── server.js                Express, port 4008, CORS allowlist, route mounts
+├── server.js                Express, port 4014, CORS allowlist, route mounts
 ├── config/
 │   └── db.js                Pooled MySQL connections, one pool per database
 ├── db/

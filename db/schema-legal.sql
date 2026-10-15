@@ -11,7 +11,7 @@
 --  the ALTER at the bottom, which needs more than IF NOT EXISTS to be so.
 -- ─────────────────────────────────────────────────────────────────────────
 
-USE dshield;
+USE duncanloop_dshield;
 
 
 -- ── legal_documents ──────────────────────────────────────────────────────

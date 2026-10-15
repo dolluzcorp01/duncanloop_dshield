@@ -43,7 +43,7 @@ const STANDARDS = [
 ];
 
 /* DPDP Act 2023 is not in the frozen file's list, which was written for a
-   global audience. Dolluz is in Chennai and every Indian client asks about
+   global audience. Duncanloop is in Chennai and every Indian client asks about
    it before they ask about GDPR. */
 const PRIVACY = [
     ["SOC 2 Type 1 & Type 2", "Trust services reporting, point-in-time and over a period."],
@@ -55,7 +55,7 @@ const PRIVACY = [
 function Services() {
     useDocumentMeta({
         title: "Cybersecurity Services — Audits, Testing, Compliance | dShield",
-        description: "Penetration testing, incident response, SOC setup, third-party risk and ISO 27001, SOC 2 and DPDP compliance, delivered by Dolluz Corp engineers.",
+        description: "Penetration testing, incident response, SOC setup, third-party risk and ISO 27001, SOC 2 and DPDP compliance, delivered by Duncanloop engineers.",
         canonical: "/services",
     });
 

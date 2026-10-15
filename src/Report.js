@@ -250,7 +250,7 @@ function Report() {
             )}
 
             <footer className="report__foot ds-faint">
-                dShield by Dolluz Corp · This report describes what was observable at the time of the scan.
+                dShield by Duncanloop · This report describes what was observable at the time of the scan.
                 It does not defend, block or remediate, and no assessment can guarantee that a system is secure.
             </footer>
         </div>

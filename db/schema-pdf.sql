@@ -18,7 +18,7 @@
 --  auditor can compare two copies by eye and know they are identical.
 -- ─────────────────────────────────────────────────────────────────────────
 
-USE dshield;
+USE duncanloop_dshield;
 
 DROP PROCEDURE IF EXISTS dshield_add_column;
 DELIMITER $$

@@ -62,10 +62,9 @@
 }
 
 /* ── the brand lockup ────────────────────────────────────────────────
-   Eagle plus wordmark plus tagline, composed rather than a single image.
-   DOLLUZ_Full_Logo.png is the vertical artwork with BLACK type — the exact
-   thing the prototype's comment says had to be recoloured before it could
-   sit on this ground. Set in type it needs no recolouring and no 150 kB. */
+   Tiles plus wordmark plus tagline, composed rather than a single image.
+   duncanloop_full_trimmed.png sets its type in dark navy, which disappears on this
+   ground. Set in type here it needs no recolouring. */
 /* The mark tilts slowly, for ever. The prototype wraps the lockup in a span
    carrying wob 5s — it is the one piece of the header that is never still. */
 .nav__mark {
@@ -81,11 +80,12 @@
     flex-shrink: 0;
 }
 
-/* The eagle is a raster mark with its own gold gradient, so there is no
-   currentColor to set — height drives it and the width follows the bird. */
+/* The tiles are a raster mark with their own colours, so there is no
+   currentColor to set. The artwork is taller than wide — 1134 × 1623 —
+   so height drives it and the width follows (about 24px). */
 .nav__mark {
     display: block;
-    height: 31px;
+    height: 34px;
     width: auto;
     flex-shrink: 0;
 }

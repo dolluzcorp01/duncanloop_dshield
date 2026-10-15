@@ -24,7 +24,7 @@ import { useEffect } from "react";
 // fifteen components is how a staging deployment ends up publishing
 // canonicals that point at production and quietly de-indexes itself.
 export const SITE_URL =
-    (process.env.REACT_APP_SITE_URL || "https://dshield.dolluzcorp.com").replace(/\/+$/, "");
+    (process.env.REACT_APP_SITE_URL || "https://duncanloop.in").replace(/\/+$/, "");
 
 function upsertMeta(name, content) {
     let el = document.head.querySelector(`meta[name="${name}"]`);

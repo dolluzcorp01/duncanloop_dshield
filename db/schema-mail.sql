@@ -14,7 +14,8 @@
 --  Nothing calls SendGrid inside a request handler. Every message is written
 --  here first and a worker picks it up afterwards.
 --
---  A Dolluz SendGrid account was frozen once. Every message attempted during
+--  A SendGrid account on the deployment this codebase was copied from was
+--  frozen once. Every message attempted during
 --  that window was dropped and gone, with nothing recording it had ever been
 --  attempted — so nobody could say who had not been written to. A row
 --  survives an outage, a restart and a bad deploy.
@@ -23,7 +24,7 @@
 --  in milliseconds whether or not mail is working at all.
 -- ─────────────────────────────────────────────────────────────────────────
 
-USE dshield;
+USE duncanloop_dshield;
 
 CREATE TABLE IF NOT EXISTS mail_outbox (
   id          BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -35,7 +36,7 @@ CREATE TABLE IF NOT EXISTS mail_outbox (
   --
   --   transactional  something the person asked for in that moment
   --   marketing      something we chose to send  → suppression + unsubscribe
-  --   internal       an alert to Dolluz, not to a customer
+  --   internal       an alert to Duncanloop, not to a customer
   --
   -- When in doubt the answer is 'marketing'. Being wrong in that direction
   -- costs one unsent email; being wrong the other way is an unlawful send.
@@ -70,7 +71,7 @@ CREATE TABLE IF NOT EXISTS mail_outbox (
 -- this file has to stay safe to re-run.
 --
 -- Comma-separated list. Used by the enquiry alert so more than one person at
--- Dolluz sees an enquiry arrive — an alert that reaches one inbox nobody is
+-- Duncanloop sees an enquiry arrive — an alert that reaches one inbox nobody is
 -- watching is the same failure as no alert at all.
 SET @cc_col := (
   SELECT COUNT(*) FROM information_schema.COLUMNS

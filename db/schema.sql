@@ -8,10 +8,10 @@
 --  runs a scan, uses a tool, or leaves an address. That is all this stores.
 -- ─────────────────────────────────────────────────────────────────────────
 
-CREATE DATABASE IF NOT EXISTS dshield
+CREATE DATABASE IF NOT EXISTS duncanloop_dshield
   CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
-USE dshield;
+USE duncanloop_dshield;
 
 
 -- ── scans ────────────────────────────────────────────────────────────────

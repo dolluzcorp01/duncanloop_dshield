@@ -16,7 +16,7 @@ const getDBConnection = require("../../config/db");
 const T = require("../utils/tools_engine");
 
 const router = express.Router();
-const db = getDBConnection(process.env.DB_NAME || "dshield");
+const db = getDBConnection(process.env.DB_NAME || "duncanloop_dshield");
 
 // Shared limiter. Looser than the scan: these are cheap, and a visitor
 // testing four of their domains in a row is normal behaviour, not abuse.

@@ -2,7 +2,7 @@
   "name": "dshield-global",
   "version": "1.0.0",
   "private": true,
-  "description": "dShield global site — free scan, free tools, pricing. Dolluz Corp.",
+  "description": "dShield global site — free scan, free tools, pricing. Duncanloop.",
   "dependencies": {
     "@sendgrid/mail": "^8.1.6",
     "cookie-parser": "^1.4.7",
@@ -32,7 +32,6 @@
     "verify:content": "node scripts/verify-site-content.mjs",
     "verify": "npm run verify:checks && npm run verify:remediation && npm run verify:content"
   },
-  "proxy": "http://localhost:4008",
   "eslintConfig": {
     "extends": [
       "react-app"

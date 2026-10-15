@@ -389,7 +389,7 @@ export function ToolPage() {
                     operatingSystem: "Any",
                     url: `${SITE_URL}/tools/${tool.slug}`,
                     offers: { "@type": "Offer", price: "0", priceCurrency: "INR" },
-                    provider: { "@type": "Organization", name: "Dolluz Corp" },
+                    provider: { "@type": "Organization", name: "Duncanloop" },
                 })}
             </script>
 

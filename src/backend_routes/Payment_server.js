@@ -33,7 +33,7 @@ const { getPlan, ASSESSMENT_TIERS, paymentsConfigured } = require("../data/plans
 const { queueMail } = require("../utils/mail");
 const { renderReportPdf, isPdfAvailable, reportDir } = require("../utils/pdf");
 
-const db = getDBConnection(process.env.DB_NAME || "dshield");
+const db = getDBConnection(process.env.DB_NAME || "duncanloop_dshield");
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const clean = (v, max) => (v === undefined || v === null) ? null : String(v).trim().slice(0, max) || null;

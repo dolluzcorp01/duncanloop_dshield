@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./Navbar.css";
-import eagle from "./assets/img/eagle-mark.png";
+import mark from "./assets/img/duncanloop_mini_logo_trimmed.png";
 import {
     SERVICES_LEFT, SERVICES_RIGHT, COMPLY_LEFT, COMPLY_RIGHT,
 } from "./data/site-content";
@@ -13,16 +13,14 @@ import {
    "Talk to experts" pushed to the far edge.
 
    THE BRAND IS COMPOSED, NOT AN IMAGE.
-   The prototype embeds the lockup as a base64 PNG and says in its own
-   comment that the supplied artwork sets the wordmark in black against a
-   near-black ground, so it recolours the black pixels to bone before
-   embedding. DOLLUZ_Full_Logo.png in this repository is that same artwork:
-   vertical, with black type. At a 70px header height it would be both the
-   wrong shape and invisible.
+   duncanloop_full_trimmed.png is the wide lockup — tiles, "duncanloop" and "Work
+   Wise" — with the type in dark navy. On this near-black ground the type is
+   close to invisible, and at a 70px header height the lockup is the wrong
+   shape anyway.
 
-   So the eagle comes from eagle-mark.png — already isolated, already gold —
-   and the wordmark is set in the display face. It scales without blurring,
-   costs 11 kB instead of 150, and takes its colours from the tokens.
+   So the mark is duncanloop_mini_logo_trimmed.png — the four tiles alone,
+   bright enough for this ground as supplied — and the wordmark is set in
+   the display face, taking its colours from the tokens.
 
    THE MEGA MENUS OPEN ON HOVER *OR* KEYBOARD FOCUS.
    The prototype's open only on mouseenter, with no keyboard path at all, so
@@ -182,10 +180,10 @@ function Navbar() {
             <header className="nav" ref={navRef}>
                 <div className="ds-wrap nav__inner">
                     <Link to="/" className="nav__brand" onClick={() => { setOpen(false); setMenu(null); }}>
-                        <img className="nav__mark" src={eagle} alt="" aria-hidden="true" width="40" height="31" />
+                        <img className="nav__mark" src={mark} alt="" aria-hidden="true" width="1134" height="1623" />
                         <span className="nav__lockup">
-                            <span className="nav__word">DOLLUZ CORP</span>
-                            <small className="nav__tag">One Place . One Start . One Team</small>
+                            <span className="nav__word">duncanloop</span>
+                            <small className="nav__tag">Work Wise</small>
                         </span>
                     </Link>
 

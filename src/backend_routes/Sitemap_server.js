@@ -19,7 +19,7 @@ const { SITEMAP_ROUTES } = require("../utils/routes");
 const router = express.Router();
 
 const SITE_URL =
-    (process.env.REACT_APP_SITE_URL || "https://dshield.dolluzcorp.com").replace(/\/+$/, "");
+    (process.env.REACT_APP_SITE_URL || "https://duncanloop.in").replace(/\/+$/, "");
 
 /** XML text escaping. Our paths are plain, but a sitemap that can be broken
  *  by one ampersand in a future route is a sitemap waiting to break. */

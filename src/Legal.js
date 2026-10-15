@@ -101,7 +101,7 @@ export function Legal() {
     useDocumentMeta({
         title: doc ? `${doc.title} | dShield` : "Legal Documents | dShield",
         description: doc
-            ? `${doc.title} for dShield, by Dolluz Corp.`
+            ? `${doc.title} for dShield, by Duncanloop.`
             : "Terms of Service, Privacy Notice, Refund Policy and Cookie Notice.",
         canonical: `/legal/${key}`,
     });

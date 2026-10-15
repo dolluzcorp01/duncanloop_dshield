@@ -11,4 +11,4 @@ Disallow: /result/
 Disallow: /preferences/
 Disallow: /data-request
 
-Sitemap: https://dshield.dolluzcorp.com/sitemap.xml
+Sitemap: https://duncanloop.in/sitemap.xml

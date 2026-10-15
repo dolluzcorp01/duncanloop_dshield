@@ -13,16 +13,17 @@ const app = express();
 // server port is `parseInt(process.env.PORT) || 3000`. A PORT line in .env
 // meant for Express is therefore taken by the React dev server first, which
 // then binds the FRONTEND to the API's port and leaves nothing for the API.
-// Same convention as the sibling dApps: dAdmin 4002, dShield 4008.
-const port = 4008;
+// 4014 — not the 4008 used by the codebase this site was copied from, so the
+// two can run side by side on one machine without either taking the other's
+// port.
+const port = 4014;
 
 // ✅ CORS — explicit allowlist in production; in development also allow any
 // localhost / 127.0.0.1 port so the React dev server on 3000 isn't blocked.
 const isProd = process.env.NODE_ENV === "production";
 
 const allowedOrigins = [
-    'https://dshield.dolluzcorp.com',   // Production URL (this app)
-    'https://dolluzcorp.com',
+    'https://duncanloop.in',   // Production URL (this app)
 ];
 
 // A browser cannot forge a localhost Origin from a real site, and this is
@@ -159,7 +160,7 @@ if (isProd) {
 if (String(process.env.MAIL_WORKER_ENABLED || "").toLowerCase() === "true") {
     const { startMailWorker } = require("./src/workers/mail-worker");
     const getDBConnection = require("./config/db");
-    startMailWorker(getDBConnection(process.env.DB_NAME || "dshield"));
+    startMailWorker(getDBConnection(process.env.DB_NAME || "duncanloop_dshield"));
 } else {
     console.log("✉️  Mail worker disabled (MAIL_WORKER_ENABLED is not 'true'). Messages will queue.");
 }

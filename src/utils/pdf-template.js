@@ -210,7 +210,7 @@ function renderReportHtml(report = {}, opts = {}) {
 <!-- ── COVER ─────────────────────────────────────────────────────────── -->
 <div class="cover">
   <div class="cover-top">
-    <div class="brand">dShield<small>BY DOLLUZ CORP</small></div>
+    <div class="brand">dShield<small>BY DUNCANLOOP</small></div>
     <div class="doctype">Security Assessment</div>
     <div class="subject">${esc(r.domain)}</div>
     <div class="gradebox">
