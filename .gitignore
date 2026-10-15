@@ -1,0 +1,70 @@
+# ── Dependencies ─────────────────────────────────────────────────────────
+node_modules/
+/.pnp
+.pnp.js
+
+# ── Build output ─────────────────────────────────────────────────────────
+build/
+dist/
+.cache/
+.eslintcache
+
+# ── Environment & secrets ────────────────────────────────────────────────
+# .env holds DB credentials. .env.example is committed as the template and
+# must never contain a real password.
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.*.local
+
+# Keys and certificates. This project reads TLS certs from remote hosts and
+# should never carry one of its own into the repository.
+*.pem
+*.key
+*.p12
+*.pfx
+
+# ── Generated reports ────────────────────────────────────────────────────
+# Paid PDFs live here. They contain customer findings and evidence and must
+# never reach the repository.
+storage/
+
+# ── Database ─────────────────────────────────────────────────────────────
+# Schema IS committed. It carries no credentials, and schema changes are
+# exactly the kind that benefit from review and history.
+# Dumps and local database files are not.
+*.sqlite
+*.sqlite3
+*.db
+*.dump
+*.backup
+
+# ── Logs ─────────────────────────────────────────────────────────────────
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+logs/
+
+# ── Testing ──────────────────────────────────────────────────────────────
+coverage/
+
+# ── Editors ──────────────────────────────────────────────────────────────
+# .vscode is shared on purpose: launch.json makes F5 start the API rather
+# than whatever file happens to be open, and settings.json pins tab width
+# and EOL so the team's diffs stay clean.
+.vscode/*
+!.vscode/settings.json
+!.vscode/launch.json
+.idea/
+*.swp
+*.swo
+*~
+
+# ── OS ───────────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini

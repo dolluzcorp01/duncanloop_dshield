@@ -1,0 +1,228 @@
+.hero { position: relative; overflow: hidden; padding: 84px 0 64px; }
+
+.hero__glow {
+    position: absolute;
+    top: -280px; left: 50%;
+    transform: translateX(-50%);
+    width: 900px; height: 620px;
+    background: radial-gradient(ellipse at center, rgba(198, 255, 61, .14), transparent 66%);
+    pointer-events: none;
+}
+
+.hero__inner { position: relative; }
+
+/* ── the hero headline ────────────────────────────────────────────────
+   Two sentences, the second in lime: five things we can see, eighteen we
+   cannot. The whole argument of the product in four lines, which is why it
+   is set at display weight and uppercase. */
+.hero__title {
+    font-family: var(--display);
+    font-weight: 900;
+    font-size: clamp(30px, 4.8vw, 58px);
+    line-height: 1.02;
+    letter-spacing: -.02em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+
+    /* A CRT stutter, twice in every seven seconds. Still for 88% of the
+       cycle — see the keyframes note in index.css. */
+    animation: glitch 7s infinite;
+}
+
+.hero__title-lime {
+    color: var(--lime);
+    text-shadow: 0 0 30px rgba(198, 255, 61, .4);
+}
+
+.hero__chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--bone-dim);
+    border: 1px solid var(--edge);
+    border-radius: 99px;
+    padding: 8px 16px;
+    margin: 0 0 20px;
+}
+
+.hero__dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--magenta);
+    box-shadow: 0 0 10px var(--magenta);
+    flex-shrink: 0;
+}
+.hero__lead { margin-bottom: 34px; }
+
+/* ── the hero, in two columns ───────────────────────────────────────────
+   Copy and scan box on the left, Bolt on the right. His column is sized to
+   its content rather than a fraction, so the scan box keeps every pixel
+   left over instead of the two of them negotiating for space.
+
+   minmax(0, 1fr) on the copy column matters: without the 0 minimum, the
+   long lead paragraph sets the column's minimum width and pushes Bolt off
+   the wrap at narrow desktop sizes.
+   ─────────────────────────────────────────────────────────────────────── */
+.hero__cols {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 40px;
+    align-items: center;
+}
+
+.hero__copy { min-width: 0; }
+
+.hero__bolt {
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    /* He is decoration with a job. Nothing here should ever take the
+       pointer away from the form beside him. */
+    pointer-events: none;
+    user-select: none;
+}
+
+/* NO OUTER CARD. The prototype's scan row is a bare flex container at
+   maxWidth 560 — the input pill and the button ARE the control, and the
+   glow belongs to them. Wrapping them in a bordered panel put a box inside
+   a box and made the input look like a field on a form rather than the one
+   thing the page is asking you to use.
+
+   The lit state lives on the input instead, which is also what Bolt's
+   "typing" mood keys off. */
+.scanbox {
+    max-width: 560px;
+}
+
+/* One row, one input, one button — the prototype's shape. The pill radius
+   and the 250px flex basis are its numbers. */
+.scanbox__row { display: flex; gap: 10px; flex-wrap: wrap; }
+.scanbox__domain {
+    flex: 1 1 250px;
+    border-radius: 99px;
+    padding: 16px 22px;
+    font-family: var(--mono);
+    font-size: 15px;
+    transition: border-color .3s ease, box-shadow .3s ease;
+}
+.scanbox__domain:focus {
+    border-color: var(--lime);
+    box-shadow: 0 0 0 4px rgba(198, 255, 61, .13);
+}
+/* Lime to cyan, the prototype's gradient, and set in the display face
+   uppercase. A flat lime pill reads as any other button on the page; this
+   one is the call to action the whole hero exists for. */
+.scanbox__go {
+    border-radius: 99px;
+    padding: 16px 30px;
+    font-family: var(--display);
+    font-weight: 900;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    background: linear-gradient(120deg, var(--lime), var(--cyan));
+    box-shadow: 0 8px 30px rgba(198, 255, 61, .33);
+}
+.scanbox__go:hover:not(:disabled) {
+    background: linear-gradient(120deg, var(--lime), var(--cyan));
+    box-shadow: 0 10px 38px rgba(198, 255, 61, .5);
+}
+.scanbox__go:disabled {
+    background: var(--panel);
+    color: var(--bone-faint);
+    box-shadow: none;
+}
+
+/* The level meter — five bars under the box while a scan runs. */
+.scanbox__meter {
+    display: flex;
+    gap: 5px;
+    margin-top: 18px;
+    max-width: 280px;
+}
+.scanbox__meter span {
+    flex: 1;
+    height: 8px;
+    border-radius: 99px;
+    background: var(--panel);
+    transition: background .4s ease, box-shadow .4s ease;
+}
+.scanbox__meter span.is-lit {
+    background: var(--lime);
+    box-shadow: 0 0 14px rgba(198, 255, 61, .53);
+}
+
+.scanbox__progress {
+    display: flex; align-items: center; gap: 10px;
+    margin-top: 12px;
+    font-family: var(--mono);
+    font-size: .84rem;
+    color: var(--lime);
+}
+.scanbox__dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--lime);
+    box-shadow: 0 0 10px var(--lime);
+    animation: ds-pulse 1.3s ease-in-out infinite;
+}
+@keyframes ds-pulse { 0%,100% { opacity: .25; } 50% { opacity: 1; } }
+
+/* .scanbox__fineprint was removed with the markup. The passive-scan promise
+   it carried is still made on the page — it is the FAQ answer to "Is this
+   safe to run on my live website?" — and the prototype keeps it there rather
+   than under the input. */
+
+.promise h3 { margin-bottom: 8px; font-size: 1.04rem; color: var(--bone); }
+
+.gap { display: flex; gap: 34px; align-items: center; }
+.gap__figure {
+    flex-shrink: 0;
+    text-align: center;
+    padding: 22px 30px;
+    border-right: 2px solid var(--edge);
+}
+.gap__num {
+    font-family: var(--display);
+    font-size: 3.6rem; font-weight: 900; line-height: 1;
+    color: var(--lime);
+    letter-spacing: -.04em;
+    text-shadow: 0 0 28px rgba(198, 255, 61, .45);
+}
+.gap__of {
+    font-family: var(--mono); font-size: .78rem;
+    color: var(--bone-faint); letter-spacing: .1em;
+}
+
+/* Bolt is gone below 860px — display:none, not a scaled-down version.
+
+   He is 200×230 plus a speech bubble. On a phone that pushes the scan box
+   below the fold, and the scan box is the entire purpose of the page. Most
+   visitors here arrive on a phone; losing the mascot there costs nothing,
+   losing the scan box costs everything. */
+@media (max-width: 860px) {
+    .hero__cols { grid-template-columns: 1fr; gap: 0; }
+    .hero__bolt { display: none; }
+}
+
+@media (max-width: 720px) {
+    .scanbox__row { flex-direction: column; }
+    .scanbox__go { width: 100%; }
+    .gap { flex-direction: column; gap: 20px; align-items: flex-start; }
+    .gap__figure {
+        border-right: 0;
+        border-bottom: 2px solid var(--edge);
+        padding: 0 0 16px;
+        text-align: left;
+        width: 100%;
+    }
+}
+
+/* The gap card previously ended with no action. Someone persuaded by the
+   argument had nowhere to go from it. */
+.gap__more { display: inline-block; margin-top: 16px; color: var(--lime); font-size: .92rem; }
+.gap__more:hover { color: #D8FF6E; }

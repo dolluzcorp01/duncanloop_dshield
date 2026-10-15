@@ -1,0 +1,327 @@
+/* ── the ticker ─────────────────────────────────────────────────────────
+   Lime bar above the header, scrolling right to left. It is the loudest
+   arcade element on the site and the first thing anybody sees, so it says
+   only things that are true and checkable.
+
+   It pauses on hover so a number can actually be read, and stops entirely
+   for anybody who has asked for reduced motion.
+   ─────────────────────────────────────────────────────────────────────── */
+
+.ticker {
+    position: relative;
+    z-index: 3;
+    background: var(--lime);
+    color: var(--void);
+    overflow: hidden;
+    padding: 7px 0;
+}
+
+.ticker__track {
+    display: flex;
+    width: max-content;
+    white-space: nowrap;
+    animation: ticker-marq 30s linear infinite;
+}
+
+.ticker:hover .ticker__track,
+.ticker:focus-within .ticker__track { animation-play-state: paused; }
+
+.ticker__run { display: flex; flex-shrink: 0; }
+
+.ticker__item {
+    padding: 0 24px;
+    font-family: var(--mono);
+    font-size: 0.69rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+}
+
+@keyframes ticker-marq {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+}
+
+/* ── header ─────────────────────────────────────────────────────────── */
+
+
+.nav {
+    position: sticky;
+    top: 0;
+    z-index: 60;
+    background: rgba(11, 3, 22, .82);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border-bottom: 1px solid var(--edge);
+}
+
+.nav__inner {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    height: 70px;
+}
+
+/* ── the brand lockup ────────────────────────────────────────────────
+   Eagle plus wordmark plus tagline, composed rather than a single image.
+   DOLLUZ_Full_Logo.png is the vertical artwork with BLACK type — the exact
+   thing the prototype's comment says had to be recoloured before it could
+   sit on this ground. Set in type it needs no recolouring and no 150 kB. */
+/* The mark tilts slowly, for ever. The prototype wraps the lockup in a span
+   carrying wob 5s — it is the one piece of the header that is never still. */
+.nav__mark {
+    animation: wob 5s ease-in-out infinite;
+}
+
+.nav__brand {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    text-decoration: none;
+    color: inherit;
+    flex-shrink: 0;
+}
+
+/* The eagle is a raster mark with its own gold gradient, so there is no
+   currentColor to set — height drives it and the width follows the bird. */
+.nav__mark {
+    display: block;
+    height: 31px;
+    width: auto;
+    flex-shrink: 0;
+}
+
+.nav__lockup {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+}
+
+.nav__word {
+    font-family: var(--display);
+    font-weight: 900;
+    font-size: 1.12rem;
+    letter-spacing: .04em;
+    color: var(--bone);
+}
+
+.nav__tag {
+    font-family: var(--sans);
+    font-size: .5rem;
+    letter-spacing: .07em;
+    color: var(--bone-faint);
+    font-weight: 500;
+    margin-top: 2px;
+}
+
+/* ── the links ───────────────────────────────────────────────────────── */
+
+.nav__links {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    margin-left: 20px;
+}
+
+.nav__group { position: relative; }
+
+.nav__link {
+    padding: 9px 14px;
+    font-family: var(--sans);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--bone-dim);
+    background: none;
+    border: 0;
+    border-radius: 99px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: color .15s ease, background .15s ease;
+}
+
+.nav__link:hover { color: var(--lime); }
+
+/* Open state inverts the pill — lime for services, cyan for compliance, the
+   prototype's own colour split. */
+.nav__link.is-open--svc  { background: var(--lime); color: var(--void); }
+.nav__link.is-open--comp { background: var(--cyan); color: var(--void); }
+
+/* Pushed to the far edge so the brand and the button anchor opposite ends. */
+.nav__cta {
+    margin-left: auto;
+    background: var(--magenta);
+    color: #fff;
+    border-radius: 99px;
+    padding: 11px 22px;
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    white-space: nowrap;
+    text-decoration: none;
+    box-shadow: 0 6px 26px rgba(255, 46, 154, .4);
+    transition: transform .2s ease, box-shadow .2s ease;
+}
+.nav__cta:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 32px rgba(255, 46, 154, .55);
+}
+
+/* ── the mega menu ───────────────────────────────────────────────────── */
+
+.mega {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 640px;
+    max-width: calc(100vw - 48px);
+    margin-top: 8px;
+    padding: 16px;
+    border-radius: var(--radius-lg);
+    background: var(--void-2);
+    border: 1px solid var(--edge);
+    box-shadow: 0 30px 70px rgba(0, 0, 0, .72);
+    display: grid;
+    grid-template-columns: 1fr 1px 1fr;
+    gap: 14px;
+    z-index: 70;
+
+    /* The open "jump". The panel scales up from half size with a 12deg
+       tilt, overshoots to 1.16 and settles — the prototype's
+       animation:"pop .28s both". Without it the menu simply appears, which
+       is the difference between a cabinet and a corporate dropdown.
+       transform-origin at the top-left anchors it to the trigger rather
+       than letting it inflate from its own middle. */
+    transform-origin: 20% 0;
+    animation: pop .28s both;
+}
+
+.mega__label {
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--cyan);
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    padding: 0 13px 9px;
+    margin: 0;
+}
+.mega__label--alt { color: var(--magenta); }
+
+/* A vertical gradient that fades out at both ends rather than a hard 1px
+   rule, so it separates the columns without cutting the box in half. */
+.mega__rule {
+    width: 1px;
+    background: linear-gradient(180deg,
+        transparent, var(--edge) 18%, rgba(255, 255, 255, .3) 50%, var(--edge) 82%, transparent);
+}
+
+.mega__item {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 11px 13px;
+    border: 0;
+    border-radius: 12px;
+    background: none;
+    cursor: pointer;
+    transition: background .2s ease;
+}
+.mega__item:hover,
+.mega__item:focus-visible { background: var(--panel); }
+
+.mega__name {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 13.5px;
+    letter-spacing: -.005em;
+    color: var(--bone);
+}
+
+.mega__tag {
+    font-family: var(--mono);
+    font-size: 8px;
+    color: var(--void);
+    background: var(--lime);
+    padding: 2px 6px;
+    border-radius: 99px;
+    letter-spacing: .08em;
+    flex-shrink: 0;
+}
+
+.mega__note {
+    display: block;
+    font-size: 11.5px;
+    color: var(--bone-faint);
+    margin-top: 3px;
+    line-height: 1.4;
+}
+
+/* ── mobile ──────────────────────────────────────────────────────────── */
+
+.nav__burger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: 0;
+    cursor: pointer;
+    padding: 8px;
+    margin-left: auto;
+}
+.nav__burger span {
+    width: 22px; height: 2px;
+    background: var(--bone);
+    border-radius: 2px;
+}
+
+/* ── mobile ──────────────────────────────────────────────────────────────
+   The drawer is IN FLOW rather than absolutely positioned, so the CTA — now
+   a sibling of the links rather than a child — can sit underneath them
+   inside it. Both wrap onto their own full-width row; an absolute drawer
+   plus a separate button would have the button floating over the page. */
+@media (max-width: 980px) {
+    .nav__tag { display: none; }
+    .nav__inner { flex-wrap: wrap; height: auto; min-height: 70px; }
+    .nav__burger { display: flex; margin-left: auto; }
+
+    .nav__links {
+        order: 3;
+        flex-basis: 100%;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        margin-left: 0;
+        border-top: 1px solid var(--edge);
+        padding: 8px 0 4px;
+        display: none;
+    }
+    .nav__links.is-open { display: flex; }
+    .nav__link { text-align: left; padding: 14px 0; border-bottom: 1px solid var(--edge); }
+
+    /* Hidden until the burger opens, then full width at the bottom of the
+       drawer. margin-left:auto is a desktop-only instruction. */
+    .nav__cta { display: none; }
+    .nav__cta.is-open {
+        display: block;
+        order: 4;
+        flex-basis: 100%;
+        margin: 12px 0 18px;
+        text-align: center;
+    }
+
+    /* In the drawer the panel is part of the flow, not an overlay — a
+       640px absolutely-positioned box would hang off the screen. */
+    .mega {
+        position: static;
+        width: auto;
+        grid-template-columns: 1fr;
+        box-shadow: none;
+        padding: 4px 0 12px;
+        background: none;
+        border: 0;
+    }
+    .mega__rule { display: none; }
+}

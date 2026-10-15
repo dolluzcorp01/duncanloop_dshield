@@ -1,0 +1,474 @@
+/* ─────────────────────────────────────────────────────────────────────────
+   The home page content sections.
+
+   Hover effects here are CSS, not the prototype's inline onMouseEnter /
+   onMouseLeave handlers writing to element.style. Those never fire for
+   somebody navigating by keyboard, so every card they decorate is invisible
+   to tab focus. :hover and :focus-visible share a rule below instead.
+   ───────────────────────────────────────────────────────────────────────── */
+
+/* The frozen file gives every one of these sections `paddingTop:86`
+   (`70` for Connect) and never a paddingBottom — the gap you see is that
+   section's own top padding, not two paddings stacked. `.ds-section`
+   (72px top *and* bottom) is shared by pages that don't have a frozen
+   reference, so it stays as-is there; `.sec` overrides it here to match
+   the frozen rhythm instead of nearly doubling every gap on this page. */
+.sec {
+    padding-top: 86px;
+    padding-bottom: 0;
+}
+
+#connect-more.sec {
+    padding-top: 70px;
+}
+
+.sec__h2 {
+    margin-bottom: 14px;
+}
+
+.sec__lead {
+    max-width: 660px;
+    margin-bottom: 32px;
+}
+
+.sec__em {
+    color: var(--lime);
+    font-style: italic;
+}
+
+.sec__more {
+    margin-top: 26px;
+}
+
+/* ── the proof figures ───────────────────────────────────────────────── */
+
+.proof {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(255px, 1fr));
+    gap: 13px;
+}
+
+.proof__cell {
+    padding: 24px 22px;
+    border-radius: var(--radius-lg);
+    background: var(--ink-3);
+    border: 1px solid var(--edge);
+    height: 100%;
+}
+
+.proof__big {
+    font-family: var(--display);
+    font-weight: 900;
+    font-size: clamp(38px, 5vw, 54px);
+    line-height: 1;
+    color: var(--lime);
+    text-shadow: 0 0 26px rgba(198, 255, 61, .33);
+}
+
+.proof__label {
+    font-family: var(--display);
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    color: var(--bone);
+    margin: 10px 0 9px;
+}
+
+.proof__sub {
+    margin: 0;
+    font-size: .88rem;
+}
+
+/* ── connect ─────────────────────────────────────────────────────────── */
+
+.conn {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(255px, 1fr));
+    gap: 14px;
+}
+
+.conn__card {
+    height: 100%;
+    padding: 18px 20px;
+    border-radius: var(--radius-lg);
+    background: var(--ink-3);
+    border: 1px solid var(--edge);
+    border-left: 3px solid var(--magenta);
+}
+
+.conn__tool {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: .14em;
+    line-height: 1.2;
+    color: var(--magenta);
+    margin: 0 0 9px;
+}
+
+.conn__name {
+    font-size: 1rem;
+    line-height: 1.2;
+    margin: 0 0 8px;
+}
+
+.conn__hides {
+    margin: 0;
+    font-size: .9rem;
+}
+
+.conn__twice {
+    margin-top: 22px;
+    padding: 22px 26px;
+    border-radius: var(--radius-lg);
+    background: var(--ink-3);
+    border: 1px solid var(--lime);
+    box-shadow: 0 0 50px rgba(198, 255, 61, .09);
+    line-height: 1.65;
+}
+
+.conn__twice-lead {
+    color: var(--lime);
+}
+
+/* ── smart checks ────────────────────────────────────────────────────── */
+
+.smart {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(255px, 1fr));
+    gap: 12px;
+}
+
+.smart__card {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 10px;
+    height: 100%;
+    padding: 20px;
+    border-radius: var(--radius-lg);
+    background: var(--ink-3);
+    border: 1px solid var(--edge);
+    text-decoration: none;
+    color: inherit;
+    transition: transform .3s cubic-bezier(.34, 1.36, .64, 1),
+                border-color .3s ease, box-shadow .3s ease;
+}
+
+/* Hover AND focus. The prototype decorates hover only, through JS handlers
+   that a keyboard never triggers. */
+.smart__card:not(.smart__card--soon):hover,
+.smart__card:focus-visible {
+    transform: translateY(-6px) rotate(-1.2deg);
+    border-color: var(--lime);
+    box-shadow: 0 16px 40px rgba(198, 255, 61, .15);
+}
+
+.smart__name {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: .95rem;
+    text-transform: uppercase;
+    line-height: 1.3;
+    letter-spacing: -.01em;
+}
+
+.smart__price {
+    font-family: var(--mono);
+    font-size: 10px;
+    flex-shrink: 0;
+    color: var(--lime);
+    padding-top: 3px;
+}
+
+/* The two with no engine behind them. Present in the grid, and
+   unmistakably not a door: dimmed, flat on hover, default cursor. It is a
+   div, so there is no focus state to suppress and no tabindex needed to keep
+   it out of the tab order. */
+.smart__card--soon {
+    opacity: .45;
+    cursor: default;
+}
+
+.smart__card--soon .smart__price {
+    color: var(--bone-faint);
+}
+
+/* ── the two-up blocks, services and compliance ───────────────────────────
+   Both used to render as two bare lists of hairline-separated rows: correct
+   information, no object. The frozen file gives each of them a surface you
+   can point at, which is the whole reason those sections read as part of the
+   same product as the tile grid above them.
+
+   .svc2 is the frozen file's own grid — 1fr 1fr, 13px, collapsing at 760.
+   Services fills its eight cells with cards; Compliance fills its two with
+   panels. */
+
+.svc2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 13px;
+}
+
+@media (max-width: 760px) {
+    .svc2 { grid-template-columns: 1fr; }
+}
+
+/* Reveal wraps every child in a div of its own, so the card has to be told
+   to fill it or the two cards in a row end up different heights. */
+.svc2 > * { height: 100%; }
+
+/* ── services · one card per service ─────────────────────────────────── */
+
+.svc {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    height: 100%;
+    padding: 22px 21px;
+    border-radius: var(--radius-lg);
+    background: var(--panel);
+    border: 1px solid var(--edge);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    color: inherit;
+    text-decoration: none;
+    transition: transform .3s cubic-bezier(.34, 1.36, .64, 1),
+                border-color .3s ease, box-shadow .3s ease;
+}
+
+/* The platform card is ours, so it is lime before you touch it. */
+.svc--platform { border-color: var(--lime); }
+
+/* The frozen file rotates these +1deg where the Smart Check cards rotate
+   -1.2deg. Two grids of cards tilting the same way reads as a page-wide
+   skew; opposing tilts read as two separate stacks of paper.
+
+   :focus-visible carries the same rule. The prototype decorates hover only,
+   through JS handlers a keyboard never fires — every card it touches is
+   invisible to tab focus. */
+.svc:hover,
+.svc:focus-visible {
+    transform: translateY(-6px) rotate(1deg);
+    border-color: var(--cyan);
+    box-shadow: 0 18px 44px rgba(0, 229, 255, .15);
+}
+
+.svc--platform:hover,
+.svc--platform:focus-visible {
+    border-color: var(--lime);
+    box-shadow: 0 18px 44px rgba(198, 255, 61, .15);
+}
+
+.svc__no {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: .14em;
+    line-height: 1.2;
+    color: var(--cyan);
+    margin-bottom: 12px;
+}
+
+.svc__tag { color: var(--lime); }
+
+.svc__name {
+    font-family: var(--display);
+    font-weight: 900;
+    font-size: 1.03rem;
+    line-height: 1.25;
+    text-transform: uppercase;
+    letter-spacing: -.01em;
+    margin: 0 0 8px;
+}
+
+.svc__note {
+    margin: 0 0 14px;
+    font-size: .85rem;
+    line-height: 1.5;
+}
+
+/* Pushed to the bottom edge so the call to action sits on one line across
+   the row however long the note above it runs. */
+.svc__go {
+    margin-top: auto;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--lime);
+}
+
+/* ── compliance · two panels of numbered rows ────────────────────────── */
+
+.frame {
+    height: 100%;
+    padding: 22px 20px;
+    border-radius: var(--radius-lg);
+    background: var(--panel);
+    border: 1px solid var(--edge);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+}
+
+.frame__label {
+    font-family: var(--mono);
+    font-size: 9.5px;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--lime);
+    margin: 0 0 16px;
+}
+
+.frame__label--alt { color: var(--magenta); }
+
+.frame__row {
+    display: block;
+    padding: 11px 12px;
+    border-radius: var(--radius);
+    margin-bottom: 3px;
+    color: inherit;
+    text-decoration: none;
+    transition: background .2s ease;
+}
+
+.frame__row:hover,
+.frame__row:focus-visible { background: var(--panel); }
+
+.frame__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 10px;
+}
+
+.frame__name {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: .92rem;
+    line-height: 1.3;
+    text-transform: uppercase;
+    letter-spacing: -.01em;
+}
+
+.frame__no {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--bone-faint);
+    flex-shrink: 0;
+}
+
+.frame__note {
+    display: block;
+    font-size: .8rem;
+    line-height: 1.45;
+    margin-top: 3px;
+}
+
+/* ── faq ─────────────────────────────────────────────────────────────── */
+
+.faq {
+    display: grid;
+    gap: 9px;
+    max-width: 840px;
+}
+
+.faq__item {
+    border-radius: var(--radius-lg);
+    background: var(--panel);
+    border: 1px solid var(--edge);
+    padding: 0 20px;
+    transition: border-color .3s cubic-bezier(.34, 1.36, .64, 1),
+                background .3s cubic-bezier(.34, 1.36, .64, 1);
+}
+
+/* THE OPEN STATE. Previously opening one of these changed nothing except
+   that text appeared underneath it — the row you clicked looked identical to
+   the four you did not, so the only feedback was the page getting taller.
+
+   Three signals, which is what the frozen file does: the border lights, the
+   ground takes a lime wash, and the question itself turns lime. */
+.faq__item[open] {
+    border-color: var(--lime);
+    background: rgba(198, 255, 61, .05);
+}
+
+.faq__item[open] .faq__q { color: var(--lime); }
+
+/* `body`'s line-height (1.6) is meant for prose. Left uninherited-from
+   here, it was inflating this single-line row well past the frozen
+   file's 18px-top/18px-bottom button padding, which is what made every
+   card in this list read as roughly twice as tall as the reference. */
+.faq__q {
+    cursor: pointer;
+    list-style: none;
+    padding: 18px 0;
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: .97rem;
+    line-height: 1.2;
+    text-transform: uppercase;
+    letter-spacing: -.01em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 14px;
+}
+
+.faq__q::-webkit-details-marker { display: none; }
+
+/* The open/closed affordance. A caret rather than a colour change, because
+   the state has to survive both a monochrome print and a reader who cannot
+   separate the lime from the ground. */
+.faq__q::after {
+    content: "+";
+    font-family: var(--mono);
+    font-size: 1.15rem;
+    color: var(--bone-faint);
+    flex-shrink: 0;
+    line-height: 1;
+    transition: transform .3s ease, color .3s ease;
+}
+
+/* Rotated, not swapped. A "+" turning through 45° into a "×" animates; a
+   "+" replaced by a "−" is a substitution the eye reads as a flicker. */
+.faq__item[open] .faq__q::after {
+    transform: rotate(45deg);
+    color: var(--lime);
+}
+
+/* The answer arrives rather than appearing. The frozen file runs its own
+   `pop` keyframe here, which overshoots to scale(1.16) with a 3° rotation —
+   fine on the small square tiles it was written for, but on a paragraph
+   840px wide that overshoot is ~130px of transient width and pushes a
+   horizontal scrollbar onto narrow viewports mid-animation.
+
+   Same character, sized for a block of text: a short rise with a 2%
+   overshoot, no rotation, nothing that can escape the card. */
+@keyframes faq-open {
+    0%   { opacity: 0; transform: translateY(-8px) scale(.97); }
+    65%  { opacity: 1; transform: translateY(0) scale(1.02); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.faq__a {
+    margin: 14px 0 0;
+    padding: 0 0 20px;
+    font-size: .91rem;
+    line-height: 1.65;
+    max-width: 70ch;
+    transform-origin: top left;
+}
+
+.faq__item[open] .faq__a { animation: faq-open .32s cubic-bezier(.34, 1.36, .64, 1) both; }
+
+/* Somebody who has asked for less motion gets the colour and the caret and
+   none of the movement. */
+@media (prefers-reduced-motion: reduce) {
+    .faq__item[open] .faq__a { animation: none; }
+}
+
+/* Answers print open. Ctrl+P is currently how a customer gets a file out of
+   a report, and a printed FAQ of five questions and no answers is a wasted
+   page. */
+@media print {
+    .faq__a { display: block !important; }
+    .faq__q::after { content: ""; }
+}

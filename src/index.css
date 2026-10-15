@@ -1,0 +1,558 @@
+/* ─────────────────────────────────────────────────────────────────────────
+   dShield global site — design tokens and base styles.
+
+   THE ARCADE THEME. Purple-black and lime, ported from the frozen v5.9
+   customer-website prototype, which Shoban has confirmed as the direction
+   for all four dShield applications.
+
+   Note the background is #0B0316 — purple-black, not neutral black. The
+   violet cast is what the rest of the palette is built on; a neutral
+   #0A0A0A kills the effect and makes the lime look radioactive.
+
+   THE VARIABLE NAMES ARE DELIBERATELY UNCHANGED. --gold is lime now and
+   --ink is void, which reads oddly here and saves a search-and-replace
+   across twenty components. New names are added alongside for anything
+   written from today.
+   ───────────────────────────────────────────────────────────────────────── */
+
+:root {
+    /* ── the arcade palette, by its own names ────────────────────────── */
+    --void:       #0B0316;   /* page background, purple-black */
+    --void-2:     #16072A;   /* raised surface */
+    --panel:      rgba(255, 255, 255, 0.045);
+    --edge:       rgba(198, 255, 61, 0.22);   /* hairline, lime at low opacity */
+
+    --lime:       #C6FF3D;   /* primary accent, calls to action */
+    --magenta:    #FF2E9A;   /* secondary accent, most chosen, critical */
+    --cyan:       #00E5FF;   /* tertiary, links and highlights */
+    --amber:      #FFB020;   /* warnings */
+
+    /* ── the original names, remapped ────────────────────────────────── */
+    --ink:        var(--void);
+    --ink-2:      var(--void-2);
+    --ink-3:      rgba(255, 255, 255, 0.045);   /* card surface = panel */
+    --line:       var(--edge);
+    --line-2:     rgba(198, 255, 61, 0.34);
+
+    --bone:       #F4F0FF;   /* primary text */
+    --bone-dim:   #B9AEDC;   /* secondary text */
+    /* The frozen palette calls this faint and sets #6E6193, which measures
+       3.65:1 on void and 3.46:1 on void-2 — below the 4.5:1 needed for body
+       text, and it carries metadata across the whole site. Lightened here
+       to 5.46:1. */
+    --bone-faint: #8B7CB8;
+
+    --gold:       var(--lime);
+    --gold-dim:   #A8DC2B;
+    --gold-glow:  rgba(198, 255, 61, 0.16);
+
+    --critical:   var(--magenta);
+    --high:       var(--amber);
+    --medium:     var(--cyan);
+    --low:        #8B7CB8;
+    --pass:       var(--lime);
+
+    --radius:     12px;
+    --radius-lg:  20px;
+
+    --mono:    "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    --sans:    "Chakra Petch", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    /* Orbitron is a display face. Headings and short labels only — a
+       paragraph set in it is unreadable, and the frozen file never does it. */
+    --display: "Orbitron", "Chakra Petch", system-ui, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html, body, #root { height: 100%; }
+
+body {
+    margin: 0;
+    background: var(--void);
+    color: var(--bone);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── the cabinet ────────────────────────────────────────────────────────
+   Two fixed overlays. The glow sits behind everything and gives the void
+   its depth; the scanlines sit on top and are the CRT.
+
+   Both are decoration and are hidden from assistive technology. The
+   scanlines are kept far lighter than the 0.28 black of the prototype:
+   over body text that reads as a dirty screen rather than a cabinet, and
+   this site carries considerably more prose than the prototype did.
+   ─────────────────────────────────────────────────────────────────────── */
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background:
+        radial-gradient(900px circle at 18% 12%, rgba(255, 46, 154, 0.10), transparent 58%),
+        radial-gradient(800px circle at 84% 34%, rgba(0, 229, 255, 0.08), transparent 58%),
+        radial-gradient(700px circle at 50% 92%, rgba(198, 255, 61, 0.07), transparent 60%);
+}
+
+body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+        180deg,
+        transparent 0 3px,
+        rgba(0, 0, 0, 0.16) 3px 4px
+    );
+}
+
+/* ── the moving scan bar ─────────────────────────────────────────────────
+   The third fixed layer, and the one that makes the cabinet feel powered
+   rather than printed: a soft cyan band sweeping down the screen every
+   seven seconds. body::before is the glow and body::after the scanlines,
+   so this takes #root::before.
+
+   Below the scanlines (z-index 9999) and above the glow, which is the
+   prototype's stacking: the bar is light passing over the tube, not
+   something drawn on the glass. */
+#root::before {
+    content: "";
+    position: fixed;
+    left: 0;
+    right: 0;
+    height: 130px;
+    z-index: 2;
+    pointer-events: none;
+    opacity: .16;
+    background: linear-gradient(180deg, transparent, var(--cyan), transparent);
+    animation: scan 7s linear infinite;
+}
+
+#root { position: relative; z-index: 1; }
+
+/* ── the arcade keyframes ────────────────────────────────────────────────
+   Ported from the prototype's CSS block. Every one of these is used; the
+   reduced-motion rule at the foot of this file switches all of them off.
+
+   pop     things arriving — menus, panels, a score landing on a tile
+   wob     a slow idle tilt, for the mark and the unanswered tiles
+   scan    the bar above
+   glitch  a rare CRT stutter on the headline
+   nudge   a downward pulse on a "look below" prompt
+   ─────────────────────────────────────────────────────────────────────── */
+
+/* Overshoots to 1.16 and rotates back through zero. The overshoot is what
+   makes it read as arriving rather than fading in. */
+@keyframes pop {
+    0%   { transform: scale(.5) rotate(-12deg); opacity: 0; }
+    70%  { transform: scale(1.16) rotate(3deg); }
+    100% { transform: scale(1) rotate(0); opacity: 1; }
+}
+
+@keyframes wob {
+    0%, 100% { transform: rotate(-1.4deg); }
+    50%      { transform: rotate(1.4deg); }
+}
+
+@keyframes scan {
+    0%   { transform: translateY(-100%); }
+    100% { transform: translateY(100vh); }
+}
+
+/* Still for 88% of the cycle, then two frames of displacement. A constant
+   glitch is a broken page; a rare one is a CRT. */
+@keyframes glitch {
+    0%, 88%, 100% { transform: none; opacity: 1; }
+    90%           { transform: translate(-2.5px, 1px); opacity: .86; }
+    94%           { transform: translate(2.5px, -1px); }
+}
+
+@keyframes nudge {
+    0%, 100% { transform: translateY(0); opacity: .8; }
+    50%      { transform: translateY(6px); opacity: 1; }
+}
+
+a { color: inherit; text-decoration: none; }
+
+h1, h2, h3, h4 {
+    margin: 0 0 12px;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    font-weight: 700;
+}
+
+/* Orbitron for the two display levels only. h3 and h4 carry finding titles
+   and other real sentences, so they stay on the body face. */
+h1, h2 {
+    font-family: var(--display);
+    font-weight: 900;
+    letter-spacing: -0.01em;
+    line-height: 1.06;
+}
+
+h1 { font-size: clamp(1.85rem, 4.6vw, 3.1rem); }
+h2 { font-size: clamp(1.4rem, 2.9vw, 2.05rem); }
+h3 { font-size: 1.2rem; }
+
+/* Opt-in arcade shout. Applied to marketing headings, never to one that has
+   to deliver bad news — SOMETHING WENT WRONG set in Orbitron 900 is
+   shouting at somebody who has just had a problem. */
+/* AND THE FROZEN FILE'S SIZE, not just its case.
+
+   The prototype sets every marketing section heading to
+   clamp(24px, 3.4vw, 42px). The global h2 here is
+   clamp(1.4rem, 2.9vw, 2.05rem) — 32.8px at 1440px against the prototype's
+   42px, a quarter smaller, which is why "Six of the eighteen open in two
+   minutes" read as a subheading rather than as the thing the section is
+   about.
+
+   Applied to .ds-shout rather than to h2, because h2 is also the tag over
+   "Something went wrong" and over finding detail on a report. Those are not
+   marketing headings and must not grow with this one. */
+.ds-shout {
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+    font-size: clamp(1.5rem, 3.4vw, 2.625rem);
+    line-height: 1.02;
+}
+
+/* h1.ds-shout keeps the h1 scale — it is already the larger of the two, and
+   letting this rule shrink a page title would be a regression on /pricing. */
+h1.ds-shout { font-size: clamp(1.85rem, 4.6vw, 3.1rem); }
+
+p { margin: 0 0 14px; }
+
+button, input, select, textarea { font-family: inherit; font-size: inherit; }
+
+/* ── layout ─────────────────────────────────────────────────────────── */
+
+.ds-wrap {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 26px;
+}
+
+.ds-section { padding: 72px 0; }
+.ds-section--tight { padding: 44px 0; }
+
+.ds-eyebrow {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--lime);
+    margin-bottom: 14px;
+}
+
+/* The frozen file recolours this label per section — magenta where it is
+   introducing the part of the product you cannot see, cyan over compliance.
+   It is the only thing distinguishing one uppercase mono label from the next
+   as you scroll past six of them. */
+.ds-eyebrow--magenta { color: var(--magenta); }
+.ds-eyebrow--cyan    { color: var(--cyan); }
+
+.ds-lead {
+    font-size: 1.12rem;
+    color: var(--bone-dim);
+    max-width: 62ch;
+}
+
+.ds-muted { color: var(--bone-dim); }
+.ds-faint { color: var(--bone-faint); font-size: 0.88rem; }
+
+/* ── buttons ────────────────────────────────────────────────────────── */
+
+.ds-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 13px 24px;
+    border: 2px solid transparent;
+    border-radius: var(--radius);
+    background: var(--lime);
+    color: var(--void);
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    cursor: pointer;
+    box-shadow: 0 0 22px rgba(198, 255, 61, 0.28);
+    transition: transform .14s ease, background .16s ease,
+                box-shadow .16s ease, opacity .16s ease;
+    white-space: nowrap;
+}
+.ds-btn:hover:not(:disabled) {
+    background: #D8FF6E;
+    transform: translateY(-2px);
+    box-shadow: 0 0 34px rgba(198, 255, 61, 0.45);
+}
+.ds-btn:disabled { opacity: .45; cursor: not-allowed; box-shadow: none; }
+
+.ds-btn--ghost {
+    background: transparent;
+    border-color: var(--line-2);
+    color: var(--bone);
+    box-shadow: none;
+}
+.ds-btn--ghost:hover:not(:disabled) {
+    background: rgba(198, 255, 61, 0.08);
+    border-color: var(--lime);
+    transform: translateY(-2px);
+    box-shadow: 0 0 22px rgba(198, 255, 61, 0.18);
+}
+
+.ds-btn--sm { padding: 9px 16px; font-size: 0.9rem; }
+.ds-btn--block { width: 100%; }
+
+/* ── the submit button ───────────────────────────────────────────────────
+   The frozen file's primary form action: full width, pill, Orbitron 900
+   uppercase, and a lime→cyan gradient that drops to a flat panel with faint
+   text while the form is incomplete.
+
+   That disabled state is doing real work. It is the only thing telling
+   somebody the form is not ready yet — a bright button that silently
+   refuses to submit reads as a broken page, and it is the state this button
+   spends most of its life in.
+
+   Shared, not copied: the scan-result lead capture already had exactly these
+   rules under .leadcap__go, and two hand-maintained copies of one button is
+   how the site ends up with two of them. */
+.ds-btn--send {
+    display: block;
+    width: 100%;
+    border-radius: 99px;
+    padding: 15px;
+    font-family: var(--display);
+    font-weight: 900;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    background: linear-gradient(120deg, var(--lime), var(--cyan));
+    box-shadow: 0 8px 28px rgba(198, 255, 61, .27);
+}
+
+.ds-btn--send:hover:not(:disabled) {
+    background: linear-gradient(120deg, var(--lime), var(--cyan));
+}
+
+.ds-btn--send:disabled {
+    background: var(--panel);
+    color: var(--bone-faint);
+    box-shadow: none;
+}
+
+/* ── cards ──────────────────────────────────────────────────────────── */
+
+.ds-card {
+    background: var(--panel);
+    border: 2px solid var(--edge);
+    border-radius: var(--radius-lg);
+    padding: 26px;
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    transition: border-color .25s ease, box-shadow .25s ease, transform .25s ease;
+}
+
+.ds-card--flat { background: var(--void-2); backdrop-filter: none; -webkit-backdrop-filter: none; }
+
+/* Hover lift is opt-in. A card that is only a container should not react to
+   the pointer as though it were a control. */
+.ds-card--live:hover {
+    border-color: var(--lime);
+    box-shadow: 0 16px 44px rgba(198, 255, 61, 0.15);
+    transform: translateY(-4px);
+}
+
+/* ── forms ──────────────────────────────────────────────────────────── */
+
+.ds-field { margin-bottom: 16px; }
+
+/* MONO, CYAN, UPPERCASE — the frozen file's field label, not a sentence in
+   grey. It is the same label treatment as .office__k across the gap and as
+   every eyebrow on the page, which is what makes a form read as part of this
+   interface rather than as a generic form dropped into it. */
+.ds-label {
+    display: block;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: .14em;
+    line-height: 1.4;
+    text-transform: uppercase;
+    color: var(--cyan);
+    margin-bottom: 7px;
+}
+
+.ds-input {
+    width: 100%;
+    padding: 13px 15px;
+    background: var(--void-2);
+    border: 2px solid var(--line-2);
+    border-radius: var(--radius);
+    color: var(--bone);
+    outline: none;
+    transition: border-color .15s ease, box-shadow .15s ease;
+}
+.ds-input::placeholder { color: var(--bone-faint); }
+.ds-input:focus {
+    border-color: var(--lime);
+    box-shadow: 0 0 0 3px var(--gold-glow), 0 0 22px rgba(198, 255, 61, 0.18);
+}
+
+textarea.ds-input { resize: vertical; min-height: 110px; }
+
+.ds-error {
+    color: var(--critical);
+    font-size: 0.9rem;
+    margin-top: 8px;
+}
+
+.ds-note {
+    background: var(--gold-glow);
+    border-left: 3px solid var(--lime);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    padding: 14px 18px;
+    color: var(--bone);
+    font-size: 0.94rem;
+}
+
+/* ── severity pills ─────────────────────────────────────────────────── */
+
+.ds-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 100px;
+    border: 1px solid currentColor;
+}
+.ds-pill--critical { color: var(--critical); }
+.ds-pill--high     { color: var(--high); }
+.ds-pill--medium   { color: var(--medium); }
+.ds-pill--low      { color: var(--low); }
+.ds-pill--pass     { color: var(--pass); }
+
+/* ── utility ────────────────────────────────────────────────────────── */
+
+.ds-grid { display: grid; gap: 20px; }
+.ds-grid--2 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+.ds-grid--3 { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+.ds-grid--4 { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+
+.ds-mono { font-family: var(--mono); }
+.ds-display { font-family: var(--display); }
+.ds-center { text-align: center; }
+
+.ds-spin {
+    width: 18px; height: 18px;
+    border: 2px solid rgba(255,255,255,.18);
+    border-top-color: var(--lime);
+    border-radius: 50%;
+    animation: ds-rotate .7s linear infinite;
+}
+@keyframes ds-rotate { to { transform: rotate(360deg); } }
+
+@media (max-width: 640px) {
+    .ds-section { padding: 48px 0; }
+    .sec { padding-top: 48px; }
+    .ds-wrap { padding: 0 18px; }
+    .ds-card { padding: 20px; }
+}
+
+/* ── Reveal ───────────────────────────────────────────────────────────────
+   Blocks fade up as they scroll into view. The class is applied by
+   Motion.js, which does not attach an observer at all under reduced motion —
+   so the rules below simply never get used in that case. */
+.reveal {
+    opacity: 0;
+    transform: translateY(30px) scale(.98);
+    transition: opacity .7s cubic-bezier(.34, 1.36, .64, 1),
+                transform .7s cubic-bezier(.34, 1.36, .64, 1);
+}
+.reveal--on {
+    opacity: 1;
+    transform: none;
+}
+
+/* ── keyboard access ──────────────────────────────────────────────────────
+
+   THE FROZEN PROTOTYPE HAS NO VISIBLE FOCUS AT ALL. Tabbing through it gives
+   no indication of where you are, which makes the page unusable without a
+   mouse and fails WCAG 2.4.7.
+
+   The fix is in the same zip — ARCHIVE/ui-explorations/dShield-arcade-v5.9.1
+   is the frozen file plus exactly this, a skip link, and the contrast repair
+   already applied to --bone-faint above. The package marked the version
+   without them CURRENT and filed the accessible one under ARCHIVE.
+
+   On a site selling security this is a poor look in front of the one buyer
+   likely to run the check.
+
+   :focus-visible rather than :focus, so a mouse click does not leave a ring
+   behind — the ring appears for keyboard users and nobody else. Lime because
+   it already means "this is the thing to act on" here, and the dark outer
+   shadow keeps it readable over the lime and magenta buttons where a lime
+   ring alone would disappear into its own background. */
+:focus { outline: none; }
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+summary:focus-visible,
+[tabindex]:focus-visible {
+    outline: 2px solid var(--lime);
+    outline-offset: 3px;
+    border-radius: 6px;
+    box-shadow: 0 0 0 5px var(--void), 0 0 20px rgba(198, 255, 61, .33);
+}
+
+/* The skip link — the first thing a keyboard user meets. Off-screen until
+   focused, then it lands top-left like any other site.
+
+   Without it, tabbing into the page means walking the entire nav before
+   reaching the one control that matters. */
+.skip {
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    z-index: 999;
+}
+.skip:focus-visible {
+    left: 14px;
+    top: 14px;
+    padding: 12px 18px;
+    border-radius: 99px;
+    background: var(--lime);
+    color: var(--void);
+    font-family: var(--display);
+    font-weight: 900;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    text-decoration: none;
+}
+
+/* Somebody who has asked their operating system to stop moving things gets a
+   still page — the ticker included, which is the one element here that would
+   otherwise never stop.
+
+   The focus ring is deliberately NOT covered by this. It is not decoration,
+   and removing it would take the page straight back to the defect above. */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation: none !important;
+        transition: none !important;
+    }
+    .reveal { opacity: 1; transform: none; }
+}

@@ -1,0 +1,369 @@
+/* ─────────────────────────────────────────────────────────────────────────
+   Contact — the form and the office card, side by side.
+
+   1.15fr / .85fr, which is the frozen file's own ratio: the form is the
+   thing being asked for, so it takes the larger share, but the card is wide
+   enough that "Mon to Fri, 9:30am to 6:30pm IST" does not wrap.
+   ───────────────────────────────────────────────────────────────────────── */
+
+.contact__split {
+    display: grid;
+    gap: 24px;
+    grid-template-columns: minmax(280px, 1.15fr) minmax(260px, .85fr);
+    /* stretch, not start. The card carries far less text than the form, so
+       left to size itself it stops halfway down and leaves the section
+       looking like the right column ran out. Two panels of equal height read
+       as one deliberate pairing. */
+    align-items: stretch;
+}
+
+@media (max-width: 900px) {
+    .contact__split { grid-template-columns: 1fr; }
+}
+
+/* The max-width belonged to a form that sat alone on the page. In a grid
+   cell it now fights the track, leaving a gap between the form and the card
+   on wide screens. The cell is the constraint. */
+.contactform { width: 100%; }
+
+.contactform__note {
+    font-family: var(--mono);
+    font-size: 10px;
+    line-height: 1.5;
+    color: var(--bone-faint);
+    text-align: center;
+    margin: 11px 0 0;
+}
+
+/* MAGENTA, NOT LIME.
+
+   Every card on this site is lime-edged, which is correct for the ones that
+   report a finding — it is the palette's "we looked at this" colour. This
+   one is not reporting anything; it is the single place on the page that
+   asks the visitor for something, and it is the destination of the header's
+   magenta "Talk to experts" button.
+
+   The frozen file borders it magenta for that reason. A magenta button that
+   scrolls to a lime card gives no sense of having arrived anywhere. */
+/* Qualified with .ds-card so it beats .ds-card's own border shorthand
+   regardless of which stylesheet the bundler emits first. Relying on source
+   order across two files is how a card silently reverts to lime in a
+   production build and nowhere else. */
+.ds-card.contactform {
+    border-color: var(--magenta);
+    box-shadow: 0 0 44px rgba(255, 46, 154, .10);
+}
+
+.contactform .req { color: var(--magenta); }
+
+.req { color: var(--gold); }
+
+/* ── the office card ─────────────────────────────────────────────────── */
+
+.office {
+    height: 100%;
+    padding: 26px 24px;
+    border-radius: var(--radius-lg);
+    background: var(--panel);
+    border: 1px solid var(--edge);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+}
+
+.office__company {
+    font-family: var(--display);
+    font-weight: 900;
+    font-size: 1.12rem;
+    line-height: 1.2;
+    text-transform: uppercase;
+    letter-spacing: .01em;
+    margin: 0 0 18px;
+}
+
+.office__row { margin-bottom: 15px; }
+
+.office__k {
+    font-family: var(--mono);
+    font-size: 9.5px;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--cyan);
+    margin: 0 0 4px;
+}
+
+.office__v {
+    font-size: .92rem;
+    line-height: 1.45;
+    color: var(--bone);
+    margin: 0;
+    /* Addresses and numbers must not push the card wider than its track. */
+    overflow-wrap: anywhere;
+}
+
+.office__v a { color: var(--bone); transition: color .15s ease; }
+.office__v a:hover,
+.office__v a:focus-visible { color: var(--lime); }
+
+.office__foot {
+    border-top: 1px solid var(--edge);
+    margin-top: 20px;
+    padding-top: 18px;
+}
+
+.office__nudge {
+    font-size: .86rem;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.office__go {
+    display: inline-block;
+    margin-top: 14px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--lime);
+}
+
+.office__go:hover,
+.office__go:focus-visible { text-decoration: underline; }
+
+.steps { margin-top: 34px; display: flex; flex-direction: column; gap: 4px; }
+.step { display: flex; gap: 22px; padding: 22px 0; border-bottom: 1px solid var(--line); }
+.step:last-child { border-bottom: 0; }
+.step__n { font-size: 1.5rem; color: var(--gold); flex-shrink: 0; width: 48px; }
+.step h3 { margin-bottom: 6px; font-size: 1.06rem; }
+
+.formula {
+    background: var(--ink-2);
+    border: 1px solid var(--line-2);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    font-size: 1rem;
+    color: var(--gold);
+    margin: 16px 0 20px;
+    overflow-x: auto;
+}
+
+.weights { display: flex; gap: 22px; flex-wrap: wrap; }
+.weights__item { display: flex; align-items: center; gap: 10px; font-size: .88rem; color: var(--bone-dim); }
+
+.plainlist { color: var(--bone-dim); padding-left: 20px; }
+.plainlist li { margin-bottom: 8px; }
+
+/* The old single-row footer's rules lived here. They are deleted rather
+   than left in place: .footer__brand set display:flex, and the rebuilt
+   footer reuses that class name for a stacked brand COLUMN, so the stale
+   rule laid its heading, mark, address and strapline out side by side and
+   overlapped them across the Platform column. The new rules are at the
+   bottom of this file.
+
+   Dead CSS for markup that no longer exists is not harmless when the class
+   names survive the rewrite. */
+
+/* ── preferences · unsubscribe landing ───────────────────────────────── */
+/* No stylesheet of its own: one card and a button. */
+.prefs { max-width: 560px; }
+.prefs h1 { margin-top: 6px; }
+.prefs__email { color: var(--bone); word-break: break-all; }
+.prefs__actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 22px; }
+
+/* A service arrived via ?topic= — shown as a read-only line rather than
+   dropped into the tier dropdown, which lists prices a service does not have. */
+.contact__topic { color: var(--bone); display: flex; align-items: center; cursor: default; }
+
+/* ─────────────────────────────────────────────────────────────────────────
+   The footer, from the prototype's line 1851.
+   Brand column plus five link columns, a legal strip, and the outlined
+   wordmark sign-off.
+   ───────────────────────────────────────────────────────────────────────── */
+
+.footer {
+    position: relative;
+    border-top: 1px solid var(--edge);
+    margin-top: 96px;
+    padding-top: 52px;
+}
+
+/* EXPLICIT TRACK COUNT, NOT auto-fit.
+
+   The prototype writes repeat(auto-fit, minmax(140px,1fr)) after the brand
+   column. auto-fit sizes tracks to the container, not to the number of
+   children, so at 1440px it lays out more tracks than there are columns:
+   the brand column collapsed to a sliver with its text overlapping
+   Platform, and Company wrapped onto a second row. Five link columns are
+   five link columns. */
+.footer__top {
+    display: grid;
+    gap: 34px;
+    grid-template-columns: minmax(230px, 1.25fr) repeat(5, minmax(120px, 1fr));
+    align-items: start;
+    padding-bottom: 40px;
+}
+
+@media (max-width: 1180px) {
+    .footer__top { grid-template-columns: repeat(3, 1fr); }
+}
+
+.footer__mark {
+    font-family: var(--display);
+    font-weight: 900;
+    font-size: 26px;
+    text-transform: uppercase;
+    letter-spacing: .01em;
+    margin: 0 0 12px;
+    color: var(--bone);
+}
+
+/* The lockup is a wide asset — roughly 4:1 — so it is sized by width and
+   left to find its own height. width/height on the <img> tag match the
+   file's real pixel dimensions so the browser reserves the right box before
+   the image loads; without them the whole footer reflows on arrival.
+
+   max-width keeps it inside the brand column at every breakpoint, including
+   the 2-up layout below 760px where that column is roughly half the screen. */
+.footer__lockup {
+    display: block;
+    width: 100%;
+    max-width: 240px;
+    height: auto;
+    margin: 0 0 16px;
+}
+
+.footer__line {
+    font-size: 14px;
+    color: var(--bone-dim);
+    line-height: 1.6;
+    margin: 0 0 18px;
+}
+
+/* Address and WhatsApp number as one block: together they are "here is how
+   you reach us". Stacked with a small gap rather than run together, because
+   an email and a phone number on one line are read as one string. */
+.footer__reach {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+.footer__email {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--lime);
+    text-decoration: none;
+}
+.footer__email:hover,
+.footer__email:focus-visible { text-decoration: underline; }
+
+/* WhatsApp brand green, the one colour on this site that is not a token —
+   it belongs to WhatsApp, and a lime WhatsApp mark is not recognised as one.
+   Same reasoning as .float__wa. */
+.footer__wa {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: #25D366;
+    text-decoration: none;
+}
+.footer__wa:hover,
+.footer__wa:focus-visible { text-decoration: underline; }
+
+.footer__waicon { flex-shrink: 0; }
+
+.footer__addr {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    color: var(--bone-faint);
+    margin: 12px 0 0;
+    line-height: 1.6;
+}
+
+.footer__brand { display: block; }
+.footer__col { display: flex; flex-direction: column; }
+
+.footer__head {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--cyan);
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    margin: 0 0 14px;
+}
+
+.footer__col a {
+    font-size: 13px;
+    color: var(--bone-dim);
+    text-decoration: none;
+    padding: 5px 0;
+    transition: color .15s ease;
+}
+.footer__col a:hover,
+.footer__col a:focus-visible { color: var(--lime); }
+
+.footer__legal {
+    border-top: 1px solid var(--edge);
+    padding: 20px 0 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.footer__copy {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--bone-faint);
+    margin: 0;
+}
+
+.footer__legallinks { display: flex; gap: 20px; flex-wrap: wrap; }
+.footer__legallinks a {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--bone-faint);
+    text-decoration: none;
+    transition: color .15s ease;
+}
+.footer__legallinks a:hover,
+.footer__legallinks a:focus-visible { color: var(--lime); }
+
+.footer__note {
+    font-size: .8rem;
+    line-height: 1.55;
+    max-width: 720px;
+    margin: 0 0 26px;
+}
+
+/* The sign-off. Transparent fill with a hairline stroke, so it reads as a
+   watermark rather than a heading. */
+.footer__sign {
+    font-family: var(--display);
+    font-weight: 900;
+    font-size: clamp(48px, 15vw, 190px);
+    letter-spacing: -.05em;
+    line-height: .8;
+    text-transform: uppercase;
+    color: transparent;
+    -webkit-text-stroke: 1px var(--edge);
+    padding-bottom: 24px;
+    margin: 0;
+    user-select: none;
+}
+
+@media (max-width: 760px) {
+    .footer__top { grid-template-columns: 1fr 1fr; gap: 26px; }
+}
+@media (max-width: 460px) {
+    .footer__top { grid-template-columns: 1fr; }
+}
+
+/* The brand column spans the full width once the grid has collapsed, so its
+   paragraph is not squeezed into a 120px track. */
+@media (max-width: 1180px) {
+    .footer__brand { grid-column: 1 / -1; }
+}

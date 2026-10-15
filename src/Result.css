@@ -1,0 +1,315 @@
+.result__head { padding-top: 48px; }
+.result__domain { font-size: clamp(1.8rem, 4vw, 2.6rem); margin-bottom: 26px; word-break: break-all; }
+
+.result__summary {
+    display: flex; gap: 26px; align-items: stretch; flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.gradecard {
+    display: flex; align-items: center; gap: 18px;
+    background: var(--panel);
+    border: 2px solid var(--edge);
+    border-radius: var(--radius-lg);
+    padding: 22px 30px;
+    min-width: 230px;
+}
+.gradecard__letter {
+    font-family: var(--display);
+    font-size: 4rem; font-weight: 900; line-height: 1;
+    letter-spacing: -.04em;
+}
+
+/* Five grades need five distinguishable colours and the palette carries
+   four accents, so B is a blend between lime and cyan — exactly as the old
+   theme blended between its green and its yellow. The ends matter most:
+   A must read as good at a glance and E as bad. */
+.gradecard--A .gradecard__letter { color: var(--lime);    text-shadow: 0 0 30px rgba(198, 255, 61, .45); }
+.gradecard--B .gradecard__letter { color: #8FE05A;        text-shadow: 0 0 30px rgba(143, 224, 90, .40); }
+.gradecard--C .gradecard__letter { color: var(--cyan);    text-shadow: 0 0 30px rgba(0, 229, 255, .40); }
+.gradecard--D .gradecard__letter { color: var(--amber);   text-shadow: 0 0 30px rgba(255, 176, 32, .40); }
+.gradecard--E .gradecard__letter { color: var(--magenta); text-shadow: 0 0 30px rgba(255, 46, 154, .45); }
+
+.gradecard__word { font-size: 1.06rem; font-weight: 600; }
+
+.counts {
+    flex: 1; min-width: 300px;
+    display: grid; grid-template-columns: repeat(5, 1fr);
+    background: var(--panel);
+    border: 2px solid var(--edge);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+}
+.counts__item { padding: 20px 8px; text-align: center; border-right: 1px solid var(--edge); }
+.counts__item:last-child { border-right: 0; }
+/* NOT Orbitron. Its zero is a filled rounded square with a diagonal through
+   it, which at this size reads as an icon rather than a digit — a magenta
+   block under the word CRITICAL looks like a warning when what it actually
+   says is "none". These five numbers are the most-read thing on the site
+   and have to be unambiguous before they are stylish. */
+.counts__n {
+    font-family: var(--sans);
+    font-size: 1.85rem; font-weight: 700; line-height: 1.1;
+    letter-spacing: -.01em;
+}
+.counts__n--critical { color: var(--critical); }
+.counts__n--high { color: var(--high); }
+.counts__n--medium { color: var(--medium); }
+.counts__n--low { color: var(--low); }
+.counts__n--pass { color: var(--pass); }
+.counts__label {
+    font-family: var(--mono); font-size: .66rem;
+    text-transform: uppercase; letter-spacing: .1em;
+    color: var(--bone-faint); margin-top: 4px;
+}
+
+.result__cap { margin-bottom: 14px; }
+.result__incon { margin-bottom: 0; }
+
+.domainrow__top { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+.domainrow__top h3 { margin: 0; font-size: 1rem; }
+.domainrow__score { font-family: var(--mono); font-size: 1.25rem; font-weight: 500; }
+.domainrow__score.is-ok { color: var(--pass); }
+.domainrow__score.is-mid { color: var(--medium); }
+.domainrow__score.is-bad { color: var(--critical); }
+
+.domainrow__bar {
+    height: 4px; border-radius: 4px;
+    background: rgba(255, 255, 255, .08);
+    margin-top: 14px; overflow: hidden;
+}
+.domainrow__bar span {
+    display: block; height: 100%;
+    background: var(--lime); border-radius: 4px;
+    box-shadow: 0 0 8px rgba(198, 255, 61, .45);
+}
+
+.locked {
+    display: flex; gap: 16px; align-items: flex-start;
+    margin-top: 22px; padding: 20px 22px;
+    background: var(--void-2);
+    border: 1px dashed var(--line-2);
+    border-radius: var(--radius-lg);
+}
+.locked__icon { color: var(--lime); flex-shrink: 0; margin-top: 2px; }
+
+/* ── the coverage map ───────────────────────────────────────────────────
+   Measured tiles are lit; the eighteen we cannot reach stay deliberately
+   dim. That contrast IS the argument the page is making, so the dark tiles
+   must stay legible rather than disappear — .46 opacity on the old near
+   black was darker than it looks on this background. */
+.covermap {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+    gap: 10px;
+}
+.covertile {
+    display: flex; flex-direction: column; gap: 3px;
+    padding: 14px 16px;
+    border-radius: var(--radius);
+    border: 1px solid var(--edge);
+    background: var(--void-2);
+}
+.covertile.is-scanned {
+    border: 2px solid var(--lime);
+    background: var(--gold-glow);
+    box-shadow: 0 0 18px rgba(198, 255, 61, .12);
+    padding: 13px 15px;
+}
+.covertile.is-dark { opacity: .58; }
+.covertile__no { font-size: .68rem; color: var(--bone-faint); letter-spacing: .08em; }
+.covertile__name { font-size: .92rem; font-weight: 500; line-height: 1.3; }
+.covertile__state {
+    font-family: var(--mono); font-size: .62rem;
+    text-transform: uppercase; letter-spacing: .1em;
+    color: var(--bone-faint); margin-top: 2px;
+}
+.covertile.is-scanned .covertile__state { color: var(--lime); }
+
+.inconclusive__list { margin: 18px 0; padding-left: 18px; color: var(--bone-dim); }
+.inconclusive__list li { margin-bottom: 7px; }
+
+/* The nudge that replaced the "What happens next" card. Centred, mono,
+   quiet, and drifting down a few pixels on a loop — the animation IS the
+   instruction, which is why it is worth having at all. */
+.nudge {
+    text-align: center;
+    margin: 26px auto 0;
+}
+
+.nudge__link {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--lime);
+    text-decoration: none;
+    display: inline-block;
+    padding: 6px 10px;
+    animation: nudge 2s ease-in-out infinite;
+}
+
+.nudge__link:hover,
+.nudge__link:focus-visible { text-decoration: underline; }
+
+/* A looping animation is exactly what a reduced-motion preference is for.
+   The line still says "below" and still scrolls; it just holds still. */
+@media (prefers-reduced-motion: reduce) {
+    .nudge__link { animation: none; }
+}
+
+@media (max-width: 700px) {
+    .counts { grid-template-columns: repeat(3, 1fr); }
+    .counts__item:nth-child(3) { border-right: 0; }
+}
+
+/* ── "Send me a copy of this" ─────────────────────────────────────────────
+   The lead capture, offered after the result and never before it. Lime
+   border because it is an offer rather than a warning, and the one thing on
+   this page asking the visitor for something. */
+.leadcap {
+    border-color: var(--lime);
+    box-shadow: 0 0 44px rgba(198, 255, 61, .10);
+}
+
+.leadcap__title {
+    font-size: 1.35rem;
+    margin: 6px 0 6px;
+}
+
+.leadcap__sub {
+    margin: 0 0 18px;
+    max-width: 60ch;
+}
+
+.leadcap__row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+/* FULL WIDTH, like the prototype's. A short button beside a wide form reads
+   as a secondary action; this is the only action in the block. */
+/* Everything this button needs now lives on .ds-btn--send in index.css,
+   which the enquiry form uses too. The markup carries both classes; only the
+   14px padding differs, because this one sits in a narrower card. */
+.leadcap__go { padding: 14px; }
+
+/* ── the marketing opt-in ────────────────────────────────────────────────
+   A real checkbox, visually restyled — not a div pretending to be one. It
+   keeps the label association, the keyboard behaviour and the announcement
+   a screen reader expects. */
+.leadcap__optin {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    cursor: pointer;
+    padding: 13px 14px;
+    border-radius: 14px;
+    margin-bottom: 14px;
+    border: 1px solid var(--edge);
+    transition: border-color .3s ease, background .3s ease;
+}
+.leadcap__optin.is-on {
+    border-color: var(--lime);
+    background: rgba(198, 255, 61, .055);
+}
+
+.leadcap__box {
+    position: relative;
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    margin-top: 1px;
+}
+
+.leadcap__box input {
+    appearance: none;
+    -webkit-appearance: none;
+    margin: 0;
+    width: 20px;
+    height: 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    border: 1px solid var(--edge);
+    background: transparent;
+    transition: background .25s ease, border-color .25s ease, box-shadow .25s ease;
+}
+.leadcap__optin.is-on .leadcap__box input {
+    background: var(--lime);
+    border-color: var(--lime);
+    box-shadow: 0 0 16px rgba(198, 255, 61, .4);
+}
+
+.leadcap__tick {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    color: var(--void);
+    font-family: var(--display);
+    font-weight: 900;
+    font-size: 12px;
+    pointer-events: none;
+}
+
+.leadcap__consent {
+    font-size: 12.5px;
+    line-height: 1.55;
+    color: var(--bone-faint);
+}
+.leadcap__optin.is-on .leadcap__consent { color: var(--bone-dim); }
+
+/* The confirmation arrives rather than replaces — prototype pop .4s. */
+.leadcap--done {
+    text-align: left;
+    animation: pop .4s both;
+    transform-origin: 50% 0;
+}
+
+@media (max-width: 620px) {
+    .leadcap__row { grid-template-columns: 1fr; }
+}
+
+/* ── scan another domain ─────────────────────────────────────────────────
+   Above the domain heading, deliberately smaller than the home page's: this
+   is a way out, not the main event on this page. */
+.rescan {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+    max-width: 420px;
+    margin-bottom: 18px;
+}
+
+.rescan__domain {
+    flex: 1 1 200px;
+    border-radius: 99px;
+    padding: 9px 16px;
+    font-family: var(--mono);
+    font-size: 13px;
+}
+
+.rescan__go {
+    border-radius: 99px;
+    padding: 9px 20px;
+    font-family: var(--display);
+    font-weight: 900;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    background: linear-gradient(120deg, var(--lime), var(--cyan));
+    box-shadow: 0 4px 18px rgba(198, 255, 61, .25);
+}
+.rescan__go:hover:not(:disabled) {
+    background: linear-gradient(120deg, var(--lime), var(--cyan));
+}
+.rescan__go:disabled {
+    background: var(--panel);
+    color: var(--bone-faint);
+    box-shadow: none;
+}
+
+.rescan__error { flex-basis: 100%; margin: 4px 0 0; }
