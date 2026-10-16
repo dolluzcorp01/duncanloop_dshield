@@ -21,7 +21,7 @@
 }
 
 /* Five grades need five distinguishable colours and the palette carries
-   four accents, so B is a blend between lime and cyan — exactly as the old
+   four accents, so B is a blend between lime and cyan - exactly as the old
    theme blended between its green and its yellow. The ends matter most:
    A must read as good at a glance and E as bad. */
 .gradecard--A .gradecard__letter { color: var(--lime);    text-shadow: 0 0 30px rgba(198, 255, 61, .45); }
@@ -43,7 +43,7 @@
 .counts__item { padding: 20px 8px; text-align: center; border-right: 1px solid var(--edge); }
 .counts__item:last-child { border-right: 0; }
 /* NOT Orbitron. Its zero is a filled rounded square with a diagonal through
-   it, which at this size reads as an icon rather than a digit — a magenta
+   it, which at this size reads as an icon rather than a digit - a magenta
    block under the word CRITICAL looks like a warning when what it actually
    says is "none". These five numbers are the most-read thing on the site
    and have to be unambiguous before they are stylish. */
@@ -96,7 +96,7 @@
 /* ── the coverage map ───────────────────────────────────────────────────
    Measured tiles are lit; the eighteen we cannot reach stay deliberately
    dim. That contrast IS the argument the page is making, so the dark tiles
-   must stay legible rather than disappear — .46 opacity on the old near
+   must stay legible rather than disappear - .46 opacity on the old near
    black was darker than it looks on this background. */
 .covermap {
     display: grid;
@@ -130,7 +130,7 @@
 .inconclusive__list li { margin-bottom: 7px; }
 
 /* The nudge that replaced the "What happens next" card. Centred, mono,
-   quiet, and drifting down a few pixels on a loop — the animation IS the
+   quiet, and drifting down a few pixels on a loop - the animation IS the
    instruction, which is why it is worth having at all. */
 .nudge {
     text-align: center;
@@ -197,7 +197,7 @@
 .leadcap__go { padding: 14px; }
 
 /* ── the marketing opt-in ────────────────────────────────────────────────
-   A real checkbox, visually restyled — not a div pretending to be one. It
+   A real checkbox, visually restyled - not a div pretending to be one. It
    keeps the label association, the keyboard behaviour and the announcement
    a screen reader expects. */
 .leadcap__optin {
@@ -261,7 +261,7 @@
 }
 .leadcap__optin.is-on .leadcap__consent { color: var(--bone-dim); }
 
-/* The confirmation arrives rather than replaces — prototype pop .4s. */
+/* The confirmation arrives rather than replaces - prototype pop .4s. */
 .leadcap--done {
     text-align: left;
     animation: pop .4s both;
@@ -313,3 +313,16 @@
 }
 
 .rescan__error { flex-basis: 100%; margin: 4px 0 0; }
+
+/* ── phones ──────────────────────────────────────────────────────────────
+   The counts strip's 300px minimum is wider than a 320px phone's content
+   column (284px), and pushed the whole page sideways. Full width instead:
+   it already drops to three-across below 700px. The rest are 44px targets
+   and 14px sentences. */
+@media (max-width: 640px) {
+    .counts { min-width: 0; flex-basis: 100%; }
+    .rescan__domain,
+    .rescan__go { min-height: 44px; }
+    .nudge__link { min-height: 44px; display: inline-flex; align-items: center; }
+    .leadcap__consent { font-size: 14px; }
+}

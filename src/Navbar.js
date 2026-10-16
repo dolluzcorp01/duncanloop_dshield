@@ -13,13 +13,13 @@ import {
    "Talk to experts" pushed to the far edge.
 
    THE BRAND IS COMPOSED, NOT AN IMAGE.
-   duncanloop_full_trimmed.png is the wide lockup — tiles, "duncanloop" and "Work
-   Wise" — with the type in dark navy. On this near-black ground the type is
+   duncanloop_full_trimmed.png is the wide lockup - tiles, "duncanloop" and "Work
+   Wise" - with the type in dark navy. On this near-black ground the type is
    close to invisible, and at a 70px header height the lockup is the wrong
    shape anyway.
 
-   So the mark is duncanloop_mini_logo_trimmed.png — the four tiles alone,
-   bright enough for this ground as supplied — and the wordmark is set in
+   So the mark is duncanloop_mini_logo_trimmed.png - the four tiles alone,
+   bright enough for this ground as supplied - and the wordmark is set in
    the display face, taking its colours from the tokens.
 
    THE MEGA MENUS OPEN ON HOVER *OR* KEYBOARD FOCUS.
@@ -27,14 +27,14 @@ import {
    half the navigation is unreachable without a mouse. Here the trigger is a
    real button with aria-expanded and aria-haspopup, opening on focus as well
    as hover; Escape closes, and so does focus leaving the header. Clicking
-   the trigger itself goes to the section — see the note on Trigger for why
+   the trigger itself goes to the section - see the note on Trigger for why
    click must not also toggle.
    ───────────────────────────────────────────────────────────────────────── */
 
 /* The ticker. Every item is a claim made elsewhere and has to stay true: 58
    is the check count in src/utils/checks/index.js, 23 and 5 are the coverage
    map, and 18 is the difference. If one stops matching the engine this is a
-   lie scrolling across the top of every page — which is why
+   lie scrolling across the top of every page - which is why
    scripts/verify-site-content.mjs asserts the numbers. */
 const TICKER = [
     "23 RISK AREAS",
@@ -53,6 +53,16 @@ const SECTIONS = {
     "smart-checks": "Smart Checks",
 };
 
+/* IN THE PHONE DRAWER, A TAP TOGGLES THE MEGA PANEL.
+
+   A tap fires mouseenter and focus before click, so on a phone the panel
+   opened and the same tap's click then navigated away and shut the drawer -
+   the menu items could never be reached. Below the drawer breakpoint hover
+   and focus do nothing and the tap opens or closes the panel in place; the
+   section itself is still one tap away through the items. Desktop is
+   unchanged. Must match the 980px query in Navbar.css. */
+const inDrawer = () => window.matchMedia("(max-width: 980px)").matches;
+
 function MegaMenu({ left, right, leftLabel, rightLabel, onPick }) {
     return (
         <div className="mega" role="menu">
@@ -69,7 +79,7 @@ function MegaMenu({ left, right, leftLabel, rightLabel, onPick }) {
                 ))}
             </div>
 
-            {/* the silver line — fades to nothing at both ends rather than
+            {/* the silver line - fades to nothing at both ends rather than
                 cutting the box in half with a hard rule */}
             <div className="mega__rule" aria-hidden="true" />
 
@@ -114,6 +124,11 @@ function Navbar() {
         if (!menu) return;
         const onKey = (e) => { if (e.key === "Escape") setMenu(null); };
         const onFocusOut = (e) => {
+            /* Not in the drawer. There the panel opens and closes on an
+               explicit tap, and the re-render that tap causes replaces the
+               focused trigger - a focusout with nowhere to go, which closed
+               the panel the tap had just opened. */
+            if (inDrawer()) return;
             if (navRef.current && !navRef.current.contains(e.relatedTarget)) setMenu(null);
         };
         document.addEventListener("keydown", onKey);
@@ -127,25 +142,26 @@ function Navbar() {
 
     /* OPEN ON HOVER *OR* FOCUS. CLICK GOES TO THE SECTION.
 
-       The obvious wiring — hover opens, click toggles — is broken on a
+       The obvious wiring - hover opens, click toggles - is broken on a
        mouse: entering the trigger opens the panel, and the click that
        follows immediately toggles it shut again, so it is impossible to
        open by clicking. Splitting the two jobs fixes it and is also the
        accessible arrangement: onFocus means a keyboard user tabbing to the
        trigger gets the panel and can tab straight into its items, which the
        prototype's hover-only version makes unreachable entirely. */
+    /* In the phone drawer a tap toggles the panel instead - see inDrawer. */
     const Trigger = ({ id, label, left, right, leftLabel, rightLabel, onPick, onActivate }) => (
         <div
             className="nav__group"
-            onMouseEnter={() => setMenu(id)}
-            onMouseLeave={() => setMenu((m) => (m === id ? null : m))}
-            onFocus={() => setMenu(id)}
+            onMouseEnter={() => { if (!inDrawer()) setMenu(id); }}
+            onMouseLeave={() => { if (!inDrawer()) setMenu((m) => (m === id ? null : m)); }}
+            onFocus={() => { if (!inDrawer()) setMenu(id); }}
         >
             <button
                 className={`nav__link nav__link--drop${menu === id ? ` is-open is-open--${id}` : ""}`}
                 aria-expanded={menu === id}
                 aria-haspopup="true"
-                onClick={onActivate}
+                onClick={() => (inDrawer() ? setMenu((m) => (m === id ? null : id)) : onActivate())}
             >
                 {label} <span aria-hidden="true">▾</span>
             </button>
@@ -199,7 +215,7 @@ function Navbar() {
                             onActivate={() => goSection("services")}
                             /* The platform entry is our own product, so it goes
                                to the scan rather than to an enquiry form. */
-                            onPick={(x) => { setMenu(null); navigate(x.platform ? "/" : "/contact"); }}
+                            onPick={(x) => { setMenu(null); setOpen(false); navigate(x.platform ? "/" : "/contact"); }}
                         />
 
                         <Trigger
@@ -218,8 +234,8 @@ function Navbar() {
                     {/* A SIBLING OF .nav__links, NOT A CHILD OF IT.
 
                         margin-left:auto only pushes when there is free space
-                        to consume. Inside .nav__links — a flex row sized to
-                        its own content — there is none, so the button sat
+                        to consume. Inside .nav__links - a flex row sized to
+                        its own content - there is none, so the button sat
                         against the last link with the whole right half of the
                         header empty. As a third child of .nav__inner the auto
                         margin has the row's spare width to eat, and the brand
@@ -231,7 +247,7 @@ function Navbar() {
                         Scrolls to the section on the home page, routes to
                         /contact from anywhere else. It stays an <a> with a
                         real href either way, so it is still a link a
-                        middle-click or a screen reader can use — a button
+                        middle-click or a screen reader can use - a button
                         that navigates is neither. */}
                     <Link
                         to="/contact"

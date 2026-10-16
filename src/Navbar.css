@@ -66,7 +66,7 @@
    duncanloop_full_trimmed.png sets its type in dark navy, which disappears on this
    ground. Set in type here it needs no recolouring. */
 /* The mark tilts slowly, for ever. The prototype wraps the lockup in a span
-   carrying wob 5s — it is the one piece of the header that is never still. */
+   carrying wob 5s - it is the one piece of the header that is never still. */
 .nav__mark {
     animation: wob 5s ease-in-out infinite;
 }
@@ -81,7 +81,7 @@
 }
 
 /* The tiles are a raster mark with their own colours, so there is no
-   currentColor to set. The artwork is taller than wide — 1134 × 1623 —
+   currentColor to set. The artwork is taller than wide - 1134 × 1623 -
    so height drives it and the width follows (about 24px). */
 .nav__mark {
     display: block;
@@ -140,7 +140,7 @@
 
 .nav__link:hover { color: var(--lime); }
 
-/* Open state inverts the pill — lime for services, cyan for compliance, the
+/* Open state inverts the pill - lime for services, cyan for compliance, the
    prototype's own colour split. */
 .nav__link.is-open--svc  { background: var(--lime); color: var(--void); }
 .nav__link.is-open--comp { background: var(--cyan); color: var(--void); }
@@ -187,7 +187,7 @@
     z-index: 70;
 
     /* The open "jump". The panel scales up from half size with a 12deg
-       tilt, overshoots to 1.16 and settles — the prototype's
+       tilt, overshoots to 1.16 and settles - the prototype's
        animation:"pop .28s both". Without it the menu simply appears, which
        is the difference between a cabinet and a corporate dropdown.
        transform-origin at the top-left anchors it to the trigger rather
@@ -278,8 +278,8 @@
 }
 
 /* ── mobile ──────────────────────────────────────────────────────────────
-   The drawer is IN FLOW rather than absolutely positioned, so the CTA — now
-   a sibling of the links rather than a child — can sit underneath them
+   The drawer is IN FLOW rather than absolutely positioned, so the CTA - now
+   a sibling of the links rather than a child - can sit underneath them
    inside it. Both wrap onto their own full-width row; an absolute drawer
    plus a separate button would have the button floating over the page. */
 @media (max-width: 980px) {
@@ -299,7 +299,28 @@
         display: none;
     }
     .nav__links.is-open { display: flex; }
-    .nav__link { text-align: left; padding: 14px 0; border-bottom: 1px solid var(--edge); }
+    /* The header is sticky, and with a mega-menu open the drawer is taller
+       than a phone screen (about 1000px against 740). A sticky box never
+       scrolls out from the top, so its lower half - Compliance, Smart Checks,
+       Talk to experts - could not be reached at all. Capped at the screen
+       height while open, it scrolls inside itself instead. */
+    .nav:has(.nav__links.is-open) {
+        max-height: 100vh;
+        max-height: 100dvh;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+    }
+    /* border-radius 0: the desktop pill radius bent this divider up at both
+       ends into a curve. */
+    .nav__link { text-align: left; padding: 14px 0; border-bottom: 1px solid var(--edge); border-radius: 0; }
+    /* The open trigger keeps the desktop pill, with its label inset from the
+       rounded ends. */
+    .nav__link.is-open--svc,
+    .nav__link.is-open--comp { border-radius: 99px; padding-left: 14px; padding-right: 14px; }
+    .nav__brand { min-height: 44px; }
+    /* 44px square target around the three bars. */
+    .nav__burger { min-width: 44px; min-height: 44px; align-items: center; justify-content: center; padding: 0; }
+    .mega__note { font-size: 14px; }
 
     /* Hidden until the burger opens, then full width at the bottom of the
        drawer. margin-left:auto is a desktop-only instruction. */
@@ -312,7 +333,7 @@
         text-align: center;
     }
 
-    /* In the drawer the panel is part of the flow, not an overlay — a
+    /* In the drawer the panel is part of the flow, not an overlay - a
        640px absolutely-positioned box would hang off the screen. */
     .mega {
         position: static;

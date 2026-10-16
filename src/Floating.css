@@ -1,4 +1,4 @@
-/* The floating pair — WhatsApp and back-to-top, from the prototype's
+/* The floating pair - WhatsApp and back-to-top, from the prototype's
    FLOATING section. Fixed bottom-right, above everything except a modal. */
 
 .float {
@@ -7,7 +7,7 @@
     bottom: 24px;
     display: flex;
     flex-direction: column;
-    /* The two buttons are different sizes — 56px and 48px. In a column with
+    /* The two buttons are different sizes - 56px and 48px. In a column with
        the default align-items:stretch they both sit flush to the LEFT edge
        of the track, which puts the smaller one 8px off centre under the
        larger. Two round buttons stacked and not concentric reads as a
@@ -19,7 +19,7 @@
 }
 
 /* WhatsApp brand green. This is the one colour on the site that is not a
-   token — it belongs to WhatsApp, and a lime WhatsApp button would not be
+   token - it belongs to WhatsApp, and a lime WhatsApp button would not be
    recognised as one. */
 .float__wa {
     width: 56px;
@@ -60,5 +60,10 @@
 @media (max-width: 640px) {
     .float { right: 14px; bottom: 16px; }
     .float__wa { width: 50px; height: 50px; }
-    .float__top { width: 42px; height: 42px; }
+    .float__top { width: 44px; height: 44px; }
+
+    /* Out of the way while someone is typing. On a phone the pair sits over
+       the right edge of every full-width field, and with the keyboard up it
+       lands on whatever is being typed into. It comes back on blur. */
+    body:has(input:focus, textarea:focus, select:focus) .float { display: none; }
 }

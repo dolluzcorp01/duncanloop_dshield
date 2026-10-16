@@ -1,4 +1,4 @@
-# dShield Site — project context
+# dShield Site - project context
 
 Read this before changing anything. It is the standing context for every
 session; individual task files in `docs/claude-tasks/` sit on top of it.
@@ -15,8 +15,8 @@ use five free tools, and see what the paid tiers cover.
 **Duncanloop is a separate legal entity from Dolluz Corp.** It is not a Dolluz
 brand, subsidiary or reseller. This repository began as a copy of Dolluz
 Corp's dShield public site and was rebranded; the product keeps the name
-dShield, only the company behind it changed. Nothing in this repository — copy,
-metadata, mail, legal text, comments — may say or imply that the two companies
+dShield, only the company behind it changed. Nothing in this repository - copy,
+metadata, mail, legal text, comments - may say or imply that the two companies
 are related, and no Dolluz contact detail, address, domain or artwork belongs
 here.
 
@@ -25,14 +25,14 @@ one has been copied for Duncanloop:
 
 | App | Subdomain | Status here |
 |---|---|---|
-| **This one** — public site | `duncanloop.in` | this repository; nobody logs in |
-| Customer portal | `app.dshield.dolluzcorp.com` | **Dolluz-only — not part of this deployment** |
-| Employee portal | `employee.dshield.dolluzcorp.com` | **Dolluz-only — not part of this deployment** |
-| Console | `admin.dshield.dolluzcorp.com` | **Dolluz-only — not part of this deployment** |
+| **This one** - public site | `duncanloop.in` | this repository; nobody logs in |
+| Customer portal | `app.dshield.dolluzcorp.com` | **Dolluz-only - not part of this deployment** |
+| Employee portal | `employee.dshield.dolluzcorp.com` | **Dolluz-only - not part of this deployment** |
+| Console | `admin.dshield.dolluzcorp.com` | **Dolluz-only - not part of this deployment** |
 
 Duncanloop has no equivalents of the other three. Do not invent subdomains for
 them or link to the Dolluz ones. If equivalents are ever built they must stay
-separate sites: the permission model depends on it — a compromised session on
+separate sites: the permission model depends on it - a compromised session on
 one must not be able to reach another.
 
 ---
@@ -44,7 +44,7 @@ original dShield codebase. Follow the existing house style rather than
 introducing a new one.
 
 - **API port 4014.** Hardcoded in `server.js`, deliberately *not* from
-  `process.env.PORT` — `react-scripts` reads `.env` first and would bind the
+  `process.env.PORT` - `react-scripts` reads `.env` first and would bind the
   dev server to it. The `proxy` in `package.json` and the dev `API_BASE` in
   `src/utils/api.js` must match it. (4008 is the original codebase's port;
   this one differs so both can run on one machine.)
@@ -52,7 +52,7 @@ introducing a new one.
   `USE` line (and `schema.sql` in `CREATE DATABASE`), and every
   `process.env.DB_NAME` fallback defaults to it. Table names are unchanged
   from the original. A `dshield` database on the same server belongs to a
-  different company — a script or fallback pointing at it writes into their
+  different company - a script or fallback pointing at it writes into their
   live data.
 - **Database access** is `config/db.js` → `getDBConnection(dbName)`, a pool
   factory. Callback-style `db.query`, not promises. Do not add an ORM.
@@ -62,6 +62,18 @@ introducing a new one.
   `.css` beside it. Design tokens are CSS variables in `src/index.css`.
 - **Response shape** is `{ success: boolean, message?: string, ... }`.
 - Errors are logged with `console.error` and an `❌` or `⚠️` prefix.
+- **No em dash or en dash, anywhere.** Only a plain hyphen `-`. This covers
+  user-visible copy, code comments, commit messages, documentation, email
+  templates, SQL comments and JSON data. It also covers the escaped forms
+  (a JavaScript or JSON escape for code point 2014 or 2013, or the HTML
+  entities mdash and ndash), which render the same characters.
+  - Punctuation between words takes a space either side: `word - word`.
+  - A range between two numbers or dates takes a bare hyphen: `9-5`,
+    `60-90 days`, `lines 372-489`.
+  - Never `9 - 5` for a range, never `word-word` for punctuation.
+
+  Check with a search for U+2014 and U+2013 across the repo, excluding
+  `node_modules` and `build`; it must return nothing.
 
 **Do not add npm dependencies** without saying so explicitly and explaining
 why. The dependency list is deliberately short.
@@ -80,7 +92,7 @@ sentences. Inconclusive checks are excluded from **both sides** of the scoring
 sum, never counted as passes.
 
 Testing of the main engine once found an aborted scan reporting **grade A,
-score 100, zero findings** — because with every check errored there was nothing
+score 100, zero findings** - because with every check errored there was nothing
 left to fail. A customer behind a firewall would have been told they were
 secure by a product they came to for the opposite.
 
@@ -92,7 +104,7 @@ Below the coverage floor (`MIN_COVERAGE_RATIO`, `MIN_COVERAGE_CHECKS` in
 
 ### The paywall is server-side
 
-Content the free tier does not include is **never sent to the browser** — not
+Content the free tier does not include is **never sent to the browser** - not
 hidden with CSS, not greyed out, not present in the JSON. It cannot leak from a
 page if it was never in the response.
 
@@ -115,7 +127,7 @@ a sentence printed on the page becomes a lie.
 ### Domain input is validated before anything is fetched
 
 `normaliseDomain` and `isPrivateAddress` in `scan_engine.js` refuse internal
-names, IP addresses and reserved ranges — including `169.254.169.254`, the
+names, IP addresses and reserved ranges - including `169.254.169.254`, the
 cloud metadata endpoint that returns the server's own credentials. Without
 these guards the scanner is an open proxy into our own network.
 
@@ -140,24 +152,24 @@ Do not add these. Their absence is the plan, not an oversight.
 | **Login / accounts** | Portal access is for recurring subscribers only, and lives in a different app. One-time buyers never log in. |
 | **The 222-question assessment** | Full Protection and above. Different app. |
 | **Connectors** | Advanced and above. Different app. |
-| **Cookie consent banner** | The site sets no non-essential cookies. A banner asking permission for cookies we do not set is theatre. **This changes the moment analytics is added** — then a banner becomes required. |
+| **Cookie consent banner** | The site sets no non-essential cookies. A banner asking permission for cookies we do not set is theatre. **This changes the moment analytics is added** - then a banner becomes required. |
 
 ---
 
 ## Known gaps, in priority order
 
-1. **Legal pages** — Terms, Privacy Notice, Refund & Cancellation, Cookie
+1. **Legal pages** - Terms, Privacy Notice, Refund & Cancellation, Cookie
    Notice. Blocking: the site already stores IP and email, and Razorpay
    onboarding generally requires published policy pages. The text in
-   `db/schema-legal.sql` still carries seven placeholders —
+   `db/schema-legal.sql` still carries seven placeholders -
    `[[LEGAL_ENTITY_NAME]]`, `[[CIN]]`, `[[REGISTERED_ADDRESS]]`,
    `[[JURISDICTION]]`, `[[SUPPORT_EMAIL]]`, `[[GRIEVANCE_OFFICER_NAME]]`,
    `[[GRIEVANCE_OFFICER_EMAIL]]`. They take **Duncanloop's own** details
    once known. Never fill them by guessing, and never with Dolluz Corp's.
-2. **Selling sections** — "What we do", Services, Compliance, "Six of the
+2. **Selling sections** - "What we do", Services, Compliance, "Six of the
    eighteen". The consulting work is the actual business and the site
    currently has no path to it.
-3. **SEO** — per-route meta tags and a sitemap. The five tools are meant to be
+3. **SEO** - per-route meta tags and a sitemap. The five tools are meant to be
    five separate front doors; without unique titles they are one page to a
    search engine.
 4. **Enquiries reach nobody.** They land in the `enquiries` table and SendGrid
@@ -169,11 +181,11 @@ Do not add these. Their absence is the plan, not an oversight.
 
 All in `src/assets/img/`, trimmed to their alpha bounds:
 
-- `duncanloop_mini_logo_trimmed.png` — the four tiles, 1134 × 1623. The
+- `duncanloop_mini_logo_trimmed.png` - the four tiles, 1134 × 1623. The
   navbar mark, and the source for every icon in `public/`.
-- `duncanloop_full_light.png` — the lockup, 3125 × 991, wordmark in
+- `duncanloop_full_light.png` - the lockup, 3125 × 991, wordmark in
   `#F4F0FF`. Use it anywhere the logo sits on the dark site (the footer).
-- `duncanloop_full_trimmed.png` — the same lockup with the master's dark
+- `duncanloop_full_trimmed.png` - the same lockup with the master's dark
   navy type. For light grounds only; on `#0B0316` the type disappears.
 
 ---
@@ -182,9 +194,9 @@ All in `src/assets/img/`, trimmed to their alpha bounds:
 
 - **The rate limiter is in-memory**, per IP and per target domain, and resets
   on restart. Fine for one process. Under PM2 cluster mode, four processes
-  means four times the limit — move it to Redis then.
+  means four times the limit - move it to Redis then.
 - **`trust proxy` is on in production.** Behind nginx `req.ip` is the proxy
-  otherwise, and the scan limiter is per IP — every visitor would share one
+  otherwise, and the scan limiter is per IP - every visitor would share one
   bucket.
 - **Two checks need outbound access** some networks block: `crt.sh` and
   `api.pwnedpasswords.com`. Both degrade to inconclusive, never to a false

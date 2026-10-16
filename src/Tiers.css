@@ -1,5 +1,5 @@
 /* ─────────────────────────────────────────────────────────────────────────
-   TIERS — five cards, each with a 23-segment bar.
+   TIERS - five cards, each with a 23-segment bar.
 
    Five columns, then two, then one: the prototype's .tiers breakpoints.
    ───────────────────────────────────────────────────────────────────────── */
@@ -66,7 +66,7 @@
 }
 .tier--star .tier__price { text-shadow: 0 0 22px rgba(255, 46, 154, .4); }
 
-/* The bar. One segment per risk area — the whole argument of the table. */
+/* The bar. One segment per risk area - the whole argument of the table. */
 .tier__bar {
     display: flex;
     gap: 2px;
@@ -102,6 +102,7 @@
     line-height: 1.45;
     color: var(--bone-dim);
 }
+@media (max-width: 540px) { .tier__line { font-size: 14px; } }
 
 /* Collapsed to nothing until hovered, focused or pinned. max-height rather
    than display so it animates; the prototype uses 340px and so does this. */

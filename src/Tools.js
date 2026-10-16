@@ -10,10 +10,10 @@ import { useDocumentMeta, SITE_URL } from "./utils/meta";
 const TOOLS = [
     {
         slug: "email-spoofing",
-        seoTitle: "Email Spoofing Test \u2014 Can Anyone Fake Your Email? | dShield",
+        seoTitle: "Email Spoofing Test - Can Anyone Fake Your Email? | dShield",
         seoDescription: "Free SPF, DKIM, DMARC and MTA-STS check. Find out in seconds whether someone can send email that appears to come from your domain.", name: "Email Spoofing Test", endpoint: "/api/tools/email-spoofing",
         blurb: "Can anyone send email that looks like it came from you?",
-        detail: "Checks SPF, DKIM, DMARC and MTA-STS — the records that tell the rest of the world which servers may send mail using your name.",
+        detail: "Checks SPF, DKIM, DMARC and MTA-STS - the records that tell the rest of the world which servers may send mail using your name.",
         input: "domain",
     },
     {
@@ -34,7 +34,7 @@ const TOOLS = [
     },
     {
         slug: "lookalike",
-        seoTitle: "Lookalike Domain Check \u2014 Find Fake Versions of Your Domain | dShield",
+        seoTitle: "Lookalike Domain Check - Find Fake Versions of Your Domain | dShield",
         seoDescription: "Find misspellings of your domain that are registered, and which of them have mail servers configured and can send invoices today.", name: "Lookalike Domain Check", endpoint: "/api/tools/lookalike",
         blurb: "Which misspellings of your domain can send invoices today?",
         detail: "A registered typo is a nuisance. One with mail servers configured is an invoice-fraud campaign waiting to be sent.",
@@ -42,8 +42,8 @@ const TOOLS = [
     },
     {
         slug: "password",
-        seoTitle: "Free Password Exposure Check \u2014 Has Yours Been Breached? | dShield",
-        seoDescription: "Check whether a password appears in known data breaches. Your password never leaves your browser \u2014 only five characters of its hash are sent.", name: "Password Exposure Check", endpoint: null,
+        seoTitle: "Free Password Exposure Check - Has Yours Been Breached? | dShield",
+        seoDescription: "Check whether a password appears in known data breaches. Your password never leaves your browser - only five characters of its hash are sent.", name: "Password Exposure Check", endpoint: null,
         blurb: "Has this password appeared in a known breach?",
         detail: "Your password never leaves your browser. It is hashed here, and only the first five characters of that hash are ever sent.",
         input: "password",
@@ -56,7 +56,7 @@ const TOOLS = [
    SHA-1 is computed in the browser using the Web Crypto API. Only the first
    five characters of the hash are sent to our server, which forwards them to
    the range API and returns every hash SUFFIX beginning with those five
-   characters — typically several hundred. We compare locally.
+   characters - typically several hundred. We compare locally.
 
    We never see the password. We never see the full hash. Nobody reading our
    logs could reconstruct either. If this ever changes so the password is
@@ -144,7 +144,7 @@ function PasswordTool() {
                             <h3>Not found in any known breach</h3>
                             <p className="ds-muted" style={{ marginBottom: 0 }}>
                                 Checked against {out.checked} hashes sharing your prefix. This means it
-                                has not appeared in a public breach corpus — not that it is strong, and
+                                has not appeared in a public breach corpus - not that it is strong, and
                                 not that it is safe to reuse.
                             </p>
                         </>
@@ -373,11 +373,11 @@ export function ToolPage() {
 
     return (
         <div className="ds-wrap ds-section">
-            <Link to="/tools" className="ds-faint">← All tools</Link>
+            <Link to="/tools" className="ds-faint ds-back">← All tools</Link>
             <h1 style={{ marginTop: 14 }}>{tool.name}</h1>
             <p className="ds-lead">{tool.detail}</p>
 
-            {/* Factual only. No aggregateRating and no review count —
+            {/* Factual only. No aggregateRating and no review count -
                 inventing ratings is dishonest and a manual-action risk. */}
             <script type="application/ld+json">
                 {JSON.stringify({

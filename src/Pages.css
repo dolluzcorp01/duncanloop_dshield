@@ -1,5 +1,5 @@
 /* ─────────────────────────────────────────────────────────────────────────
-   Contact — the form and the office card, side by side.
+   Contact - the form and the office card, side by side.
 
    1.15fr / .85fr, which is the frozen file's own ratio: the form is the
    thing being asked for, so it takes the larger share, but the card is wide
@@ -18,7 +18,10 @@
 }
 
 @media (max-width: 900px) {
-    .contact__split { grid-template-columns: 1fr; }
+    /* minmax(0, 1fr), not 1fr. A bare 1fr cannot shrink below its content's
+       minimum width, and the form's fields set that at 324px - wider than a
+       320px phone, so the whole page scrolled sideways. */
+    .contact__split { grid-template-columns: minmax(0, 1fr); }
 }
 
 /* The max-width belonged to a form that sat alone on the page. In a grid
@@ -38,7 +41,7 @@
 /* MAGENTA, NOT LIME.
 
    Every card on this site is lime-edged, which is correct for the ones that
-   report a finding — it is the palette's "we looked at this" colour. This
+   report a finding - it is the palette's "we looked at this" colour. This
    one is not reporting anything; it is the single place on the page that
    asks the visitor for something, and it is the destination of the header's
    magenta "Talk to experts" button.
@@ -129,6 +132,14 @@
 .office__go:hover,
 .office__go:focus-visible { text-decoration: underline; }
 
+/* Phones: sentences at a readable size, and small text links given a
+   44px-tall target without changing how they look. */
+@media (max-width: 640px) {
+    .contactform__note { font-size: 14px; }
+    .office__nudge { font-size: 14px; }
+    .office__go { display: inline-flex; align-items: center; min-height: 44px; margin-top: 4px; }
+}
+
 .steps { margin-top: 34px; display: flex; flex-direction: column; gap: 4px; }
 .step { display: flex; gap: 22px; padding: 22px 0; border-bottom: 1px solid var(--line); }
 .step:last-child { border-bottom: 0; }
@@ -169,7 +180,7 @@
 .prefs__email { color: var(--bone); word-break: break-all; }
 .prefs__actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 22px; }
 
-/* A service arrived via ?topic= — shown as a read-only line rather than
+/* A service arrived via ?topic= - shown as a read-only line rather than
    dropped into the tier dropdown, which lists prices a service does not have. */
 .contact__topic { color: var(--bone); display: flex; align-items: center; cursor: default; }
 
@@ -216,7 +227,7 @@
     color: var(--bone);
 }
 
-/* The lockup is a wide asset — 3125 × 991, about 3.15:1 — so it is sized by
+/* The lockup is a wide asset - 3125 × 991, about 3.15:1 - so it is sized by
    width and left to find its own height. width/height on the <img> tag match
    the file's real pixel dimensions so the browser reserves the right box
    before the image loads; without them the whole footer reflows on arrival.
@@ -257,7 +268,7 @@
 .footer__email:hover,
 .footer__email:focus-visible { text-decoration: underline; }
 
-/* WhatsApp brand green, the one colour on this site that is not a token —
+/* WhatsApp brand green, the one colour on this site that is not a token -
    it belongs to WhatsApp, and a lime WhatsApp mark is not recognised as one.
    Same reasoning as .float__wa. */
 .footer__wa {
@@ -360,6 +371,22 @@
 }
 @media (max-width: 460px) {
     .footer__top { grid-template-columns: 1fr; }
+}
+
+/* Phones. Every footer link becomes a 44px row, the sentences come up to
+   14px, and the page ends with room to scroll the last line clear of the
+   floating WhatsApp and back-to-top pair (about 104px tall, 16px up). */
+@media (max-width: 640px) {
+    .footer { padding-bottom: 120px; }
+    .footer__reach { gap: 0; }
+    .footer__email,
+    .footer__wa { font-size: 14px; min-height: 44px; display: inline-flex; align-items: center; }
+    .footer__addr { font-size: 14px; }
+    .footer__col a { font-size: 14px; padding: 0; min-height: 44px; display: flex; align-items: center; }
+    .footer__copy { font-size: 14px; }
+    .footer__legallinks { gap: 0 20px; }
+    .footer__legallinks a { font-size: 14px; min-height: 44px; display: inline-flex; align-items: center; }
+    .footer__note { font-size: 14px; }
 }
 
 /* The brand column spans the full width once the grid has collapsed, so its

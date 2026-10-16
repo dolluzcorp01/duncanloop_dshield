@@ -1,9 +1,9 @@
-# dShield — Global Site
+# dShield - Global Site
 
 **Duncanloop · Chennai** · repository `duncanloop_dshield` · https://duncanloop.in
 
 dShield, operated by **Duncanloop**. Duncanloop is a separate legal entity
-from Dolluz Corp — it is not a Dolluz brand, subsidiary or reseller. This
+from Dolluz Corp - it is not a Dolluz brand, subsidiary or reseller. This
 repository began as a copy of Dolluz Corp's dShield site and was rebranded;
 nothing here may say or imply that the two companies are related.
 
@@ -38,20 +38,20 @@ collects interest instead. Everything above is live and useful without it.
 accounts. The free scan and all five tools use only DNS, TLS and HTTP.
 
 ```bash
-# 1 — database (creates and uses `duncanloop_dshield`; table names unchanged)
+# 1 - database (creates and uses `duncanloop_dshield`; table names unchanged)
 mysql -u root -p < db/schema.sql
 mysql -u root -p < db/schema-legal.sql   # must run after schema.sql
 mysql -u root -p < db/schema-mail.sql    # must run after schema-legal.sql
 mysql -u root -p < db/schema-orders.sql  # must run after schema-mail.sql
 mysql -u root -p < db/schema-pdf.sql     # must run after schema-orders.sql
 
-# 2 — configure
+# 2 - configure
 #     open .env and set DB_PASSWORD
 
-# 3 — install
+# 3 - install
 npm install
 
-# 4 — run both halves together
+# 4 - run both halves together
 npm run dev
 ```
 
@@ -70,7 +70,7 @@ curl -X POST http://localhost:4014/api/scan \
      -d '{"domain":"github.com"}'
 ```
 
-A scan takes 20–60 seconds depending on how quickly the other end answers.
+A scan takes 20-60 seconds depending on how quickly the other end answers.
 
 ---
 
@@ -130,7 +130,7 @@ so a free scan here and a paid scan there produce comparable numbers.
 
 "We looked and found nothing wrong" and "we could not look" are different
 sentences. Inconclusive checks are excluded from **both sides** of the scoring
-sum. Below the coverage floor no grade is published at all — earlier testing of
+sum. Below the coverage floor no grade is published at all - earlier testing of
 the main engine found an aborted scan reporting grade A, score 100, zero
 findings, because with every check errored there was nothing left to fail. A
 customer behind a firewall would have been told they were secure.
@@ -146,7 +146,7 @@ with a critical hole and otherwise good hygiene is not a B.
 
 **The rate limiter is in-memory.** Per IP and per target domain, and it resets
 on restart. Fine for a single process. If this ever runs under PM2 in cluster
-mode, four processes means four times the limit — move it to Redis then.
+mode, four processes means four times the limit - move it to Redis then.
 
 **Enquiries do not email anybody yet.** SendGrid is not wired on this app. Rows
 land in `enquiries` and somebody has to watch that table. An enquiry that
@@ -154,7 +154,7 @@ reaches nobody is worse than one never made, because the person is waiting.
 
 **Two checks need outbound access** that some networks block: `crt.sh` for
 certificate transparency, and `api.pwnedpasswords.com` for the password tool.
-Both degrade correctly — inconclusive, never a false pass — but test them on
+Both degrade correctly - inconclusive, never a false pass - but test them on
 the server before launch rather than assuming.
 
 **`trust proxy` is on in production.** Behind nginx, `req.ip` is the proxy
@@ -162,7 +162,7 @@ unless Express is told otherwise, and the scan limiter is per IP. Without it
 every visitor shares one bucket and the first dozen scans of the hour lock out
 everybody else.
 
-### PDF reports — Chrome is a dependency
+### PDF reports - Chrome is a dependency
 
 Paid reports are delivered as a web page **and** a PDF. The page always works;
 the PDF is generated after delivery and is allowed to fail without affecting
@@ -173,7 +173,7 @@ npx puppeteer browsers install chrome
 ```
 
 **The server needs 4GB of RAM.** A render peaks around 700MB across Chrome's
-helper processes, and below 4GB the OS kills Chrome mid-render — which shows
+helper processes, and below 4GB the OS kills Chrome mid-render - which shows
 up as intermittent, hard-to-attribute failures rather than a clean error.
 Check the droplet before this ships.
 
@@ -183,7 +183,7 @@ template: every value interpolated into it is escaped, and no customer-supplied
 HTML is ever passed in.
 
 Generated files live in `REPORT_DIR` (default `./storage/reports`), which is
-gitignored — they contain customer findings.
+gitignored - they contain customer findings.
 
 **If Chrome misbehaves in production, set `PDF_ENABLED=false`.** Everything
 else keeps working: orders complete, reports are delivered, and no PDF button
@@ -219,7 +219,7 @@ Deliberately, and it is worth saying out loud to anyone who asks:
 
 ## Next, in order
 
-1. Test the scan against 20 real Indian company domains — sites behind
+1. Test the scan against 20 real Indian company domains - sites behind
    Cloudflare, on shared hosting, with odd certificates. The engine has met
    test domains, not messy real ones.
 2. Wire SendGrid so enquiries reach a person rather than a table.
